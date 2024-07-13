@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import sliderImage1 from "@/assets/bannerImages/banner1.webp";
 import sliderImage2 from "@/assets/bannerImages/banner2.jpg";
-import sliderImage3 from "@/assets/bannerImages/banner1.jpeg"
+import sliderImage3 from "@/assets/bannerImages/banner1.jpeg";
 
 export function HeroSection() {
   const sliderData = [
@@ -28,7 +28,7 @@ export function HeroSection() {
   ];
 
   return (
-    <div className="relative w-full h-[500px] -mt-0.5">
+    <div className=" w-full  -mt-0.5 ">
       <Carousel
         className=" overflow-hidden shadow-lg"
         plugins={[
@@ -55,7 +55,6 @@ export function HeroSection() {
           &#9654;
         </CarouselNext>
       </Carousel>
-      
     </div>
   );
 }

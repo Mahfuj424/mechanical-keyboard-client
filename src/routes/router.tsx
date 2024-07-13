@@ -1,5 +1,6 @@
 import Main from "@/layouts/Main";
 import About from "@/pages/about/About";
+import Cart from "@/pages/cart/Cart";
 import Contact from "@/pages/contact/Contact";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Home from "@/pages/home/Home";
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path:'/dashboard',
         element:<Dashboard/>
+      },
+      {
+        path:'/cart',
+        element:<Cart/>
       },
     ]
   },

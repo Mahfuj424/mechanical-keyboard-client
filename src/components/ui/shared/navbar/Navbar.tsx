@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { SlMenu } from "react-icons/sl";
+import { BsCart3 } from "react-icons/bs";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const buttonRef = useRef(null);
   const location = useLocation();
 
   // Define the routes that should have a white background initially
@@ -36,7 +38,12 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const handleClickOutside = (event: any) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
+    if (
+      menuRef.current &&
+      !menuRef.current.contains(event.target) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target)
+    ) {
       setIsMenuOpen(false);
     }
   };
@@ -63,12 +70,15 @@ const Navbar = () => {
 
   return (
     <div
-      className={`fixed z-10 w-full transition-colors duration-300 ${bgColor}`}
+      className={`fixed z-10 w-full transition-colors duration-300 ${
+        location?.pathname === "/" ? bgColor : "bg-gray-900"
+      }`}
     >
       <div className="navbar max-w-[1200px] mx-auto flex items-center justify-between p-4">
         {/* Logo */}
-        <div>
-          <img className="w-40 h-12" src="path_to_your_logo" alt="Logo" />
+        <div className="flex items-center justify-center">
+          <h1 className="text-6xl font-semibold text-red-500">E-</h1>
+          <h1 className={`text-white text-2xl font-semibold mt-3`}>Market</h1>
         </div>
 
         {/* Large screen */}
@@ -80,9 +90,9 @@ const Navbar = () => {
                   to={item.url}
                   className={({ isActive }) =>
                     `${
-                      isActive ? "text-red-500 border-b-4 border-red-500" : ""
-                    } ${
-                      location.pathname === "/" ? "text-white" : "text-black"
+                      isActive
+                        ? "text-red-500 border-b-4 border-red-500"
+                        : "text-white"
                     } hover:text-red-500 transition-all`
                   }
                 >
@@ -93,33 +103,28 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div
-          className={`text-xl ${
-            location.pathname === "/" ? "text-white" : "text-black"
-          }`}
-        >
-          cart
-        </div>
+        <Link to={"/cart"} className="text-xl text-white">
+          <BsCart3 />
+        </Link>
 
         {/* Mobile screen */}
         <div className="lg:hidden flex items-center">
           <button
+            ref={buttonRef}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`btn btn-ghost ${
-              location.pathname === "/" ? "text-white" : "text-black"
-            }`}
+            className="btn btn-ghost text-white"
           >
             <SlMenu className="text-2xl" />
           </button>
           <div
             ref={menuRef}
-            className={`fixed top-0 right-0 h-full p-5 w-64 shadow-lg z-20 transform transition-transform duration-300 ${
+            className={`fixed top-0 right-0 h-full w-3/4 bg-white z-20 transform transition-transform duration-300 ${
               isMenuOpen ? "translate-x-0" : "translate-x-full"
-            }`}
+            } flex flex-col items-center justify-center`}
           >
-            <ul className="space-y-4 mt-16">
+            <ul className="space-y-4">
               {navItems.map((item, index) => (
-                <li key={index} className="text-black">
+                <li key={index} className="text-xl text-black">
                   <NavLink
                     to={item.url}
                     className="flex items-center gap-1"
