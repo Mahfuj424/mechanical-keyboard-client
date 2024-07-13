@@ -90,8 +90,8 @@ const Testimonial = () => {
             spaceBetween: 10,
           },
           "@0.75": {
-            slidesPerView: 2,
-            spaceBetween: 20,
+            slidesPerView: 1,
+            spaceBetween:20,
           },
           "@1.00": {
             slidesPerView: 2,

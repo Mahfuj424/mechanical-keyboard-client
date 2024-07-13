@@ -40,7 +40,7 @@ const WhyChoose = () => {
           "Explore the advantages of mechanical keyboards and discover why they are preferred by enthusiasts and professionals alike."
         }
       />
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto mt-5">
         {faqs.map((faq, index) => (
           <div key={index} className="mb-4 border-b">
             <button
