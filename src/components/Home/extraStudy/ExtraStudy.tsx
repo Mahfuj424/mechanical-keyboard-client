@@ -12,7 +12,7 @@ const ExtraStudy = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="ps-3" data-aos="fade-up" data-aos-duration="3000">
                 <p className="lg:text-6xl md:text-4xl text-3xl text-white font-semibold md:font-bold">
-                  Choose Your Product
+                  Choose Your Keyboard
                 </p>
                 <p className="md:text-lg text-sm text-white font-semibold mt-7">
                   Nullam suscipit id ante bibendum bibendum. Vivamus interdum

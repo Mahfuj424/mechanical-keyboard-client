@@ -49,7 +49,7 @@ const WhyChoose = () => {
             >
               <span className="flex-1">{faq.question}</span>
               <span className="ml-2">
-                {openIndex === index ? <FaMinus /> : <FaPlus />}
+                {openIndex === index ? <FaMinus /> : <FaPlus className='text-red-500'/>}
               </span>
             </button>
             {openIndex === index && (

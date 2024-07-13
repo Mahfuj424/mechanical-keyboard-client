@@ -7,9 +7,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import sliderImage1 from "@/assets/bannerImages/banner1.webp";
+import sliderImage3 from "@/assets/bannerImages/banner3.jpg";
 import sliderImage2 from "@/assets/bannerImages/banner2.jpg";
-import sliderImage3 from "@/assets/bannerImages/banner1.jpeg";
+import sliderImage1 from "@/assets/bannerImages/banner.avif";
+import AddCardButton from "../ui/AddCardButton";
+import { Link } from "react-router-dom";
 
 export function HeroSection() {
   const sliderData = [
@@ -27,10 +29,34 @@ export function HeroSection() {
     },
   ];
 
+  const bannerContent = [
+    {
+      id: 1,
+      discount: "STARTING $60.00",
+      title: "Unique Keyboard Style",
+      description:
+        "Experience unparalleled typing precision and speed. Designed for both gamers and professionals.",
+    },
+    {
+      id: 2,
+      discount: "STARTING $40.00",
+      title: "User Friendly Keyboard",
+      description:
+        "Elevate your typing with our top-tier mechanical keyboards. Crafted for durability and comfort.",
+    },
+    {
+      id: 3,
+      discount: "STARTING $20.00",
+      title: "Quality Keyboard",
+      description:
+        "Discover the perfect blend of comfort and performance. Enhance your productivity and gaming sessions.",
+    },
+  ];
+
   return (
-    <div className=" w-full  -mt-0.5 ">
+    <div className="w-full -mt-0.5">
       <Carousel
-        className=" overflow-hidden shadow-lg"
+        className="overflow-hidden shadow-lg"
         plugins={[
           Autoplay({
             delay: 6000,
@@ -38,11 +64,27 @@ export function HeroSection() {
         ]}
       >
         <CarouselContent>
-          {sliderData.map((slider) => (
+          {sliderData.map((slider, index) => (
             <CarouselItem key={slider.id} className="min-w-full p-0">
-              <Card className="bg-transparent">
-                <CardContent className="flex items-center justify-center h-[100vh] w-full p-0">
-                  <img src={slider?.image} className="h-full w-full" alt="" />
+              <Card className="bg-transparent relative">
+                <CardContent className="flex items-center justify-center h-[100vh] w-full p-0 relative">
+                  <img src={slider.image} className="h-full w-full" alt="" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30"></div>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4 z-10">
+                    <div className="bg-red-500 text-lg md:text-3xl font-semibold md:px-8 px-4 md:py-4 py-2 mb-4 rounded">
+                      {bannerContent[index].discount}
+                    </div>
+                    <h1 className="text-4xl md:text-6xl font-bold mb-2">
+                      {bannerContent[index].title}
+                    </h1>
+                    <p className="text-lg mb-4 md:w-1/3 w-full">
+                      {bannerContent[index].description}
+                    </p>
+                    <Link to='/product'>
+                      <AddCardButton name={"Shop Now"} />
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             </CarouselItem>

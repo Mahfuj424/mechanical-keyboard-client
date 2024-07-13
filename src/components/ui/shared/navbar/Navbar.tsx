@@ -76,10 +76,10 @@ const Navbar = () => {
     >
       <div className="navbar max-w-[1200px] mx-auto flex items-center justify-between p-4">
         {/* Logo */}
-        <div className="flex items-center justify-center">
+        <Link to='/' className="flex items-center justify-center">
           <h1 className="text-6xl font-semibold text-red-500">E-</h1>
           <h1 className={`text-white text-2xl font-semibold mt-3`}>Market</h1>
-        </div>
+        </Link>
 
         {/* Large screen */}
         <div className="hidden lg:flex items-center pt-2">
@@ -103,7 +103,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link to={"/cart"} className="text-xl text-white">
+        <Link to={"/cart"} className="text-xl md:block hidden text-white">
           <BsCart3 />
         </Link>
 
@@ -122,6 +122,9 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } flex flex-col items-center justify-center`}
           >
+            <Link to={"/cart"} className="text-xl flex items-center -ms-10 mb-5 gap-2 text-black">
+              <BsCart3 /> cart
+            </Link>
             <ul className="space-y-4">
               {navItems.map((item, index) => (
                 <li key={index} className="text-xl text-black">
