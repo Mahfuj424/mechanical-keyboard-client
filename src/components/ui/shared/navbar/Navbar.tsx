@@ -74,7 +74,7 @@ const Navbar = () => {
         location?.pathname === "/" ? bgColor : "bg-gray-900"
       }`}
     >
-      <div className="navbar max-w-[1200px] mx-auto flex items-center justify-between p-4">
+      <div className="navbar max-w-7xl px-4 lg:px-0 mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link to='/' className="flex items-center justify-center">
           <h1 className="text-6xl font-semibold text-red-500">E-</h1>
@@ -85,13 +85,13 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center pt-2">
           <ul className="menu menu-horizontal flex px-1 space-x-7">
             {navItems.map((item, index) => (
-              <li className="text-xl" key={index}>
+              <li key={index}>
                 <NavLink
                   to={item.url}
                   className={({ isActive }) =>
                     `${
                       isActive
-                        ? "text-red-500 border-b-4 border-red-500"
+                        ? "text-red-500"
                         : "text-white"
                     } hover:text-red-500 transition-all`
                   }
@@ -103,7 +103,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link to={"/cart"} className="text-xl md:block hidden text-white">
+        <Link to={"/cart"} className="text-xl lg:block hidden text-white">
           <BsCart3 />
         </Link>
 

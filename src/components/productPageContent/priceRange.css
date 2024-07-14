@@ -1,0 +1,20 @@
+.horizontal-slider {
+    height: 6px;
+    background: #ddd;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  .example-thumb {
+    height: 20px;
+    width: 20px;
+    background-color: #ff0000; /* Change color as needed */
+    border-radius: 50%;
+    cursor: grab;
+  }
+  
+  .example-track {
+    background: #d0d0d0;
+    height: 6px;
+  }
+  

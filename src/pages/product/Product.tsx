@@ -1,19 +1,36 @@
+// Product.tsx
 
-import MainContent from '@/components/productPageContent/MainContent';
-import SideBar from '@/components/productPageContent/SideBar';
-import SecondNavbar from '@/components/ui/shared/SecondNavbar';
-import React from 'react';
+import React, { useState } from "react";
+import SecondNavbar from "@/components/ui/shared/SecondNavbar";
+import SideBar from "@/components/productPageContent/SideBar";
+import MainContent from "@/components/productPageContent/MainContent";
+import { ScrollRestoration } from "react-router-dom";
 
 const Product = () => {
-    return (
-        <div className='mb-20'>
-            <SecondNavbar/>
-            <div className='flex w-full max-w-7xl mx-auto gap-10'>
-                <SideBar/>
-                <MainContent/>
-            </div>
-        </div>
-    );
+  const [filterOptions, setFilterOptions] = useState({
+    minPrice: undefined,
+    maxPrice: undefined,
+    sortBy: "Default",
+    searchTerm: "",
+  });
+
+  const handleFilterChange = (newFilters: any) => {
+    setFilterOptions((prevFilters) => ({
+      ...prevFilters,
+      ...newFilters,
+    }));
+  };
+
+  return (
+    <div className="mb-20">
+      <ScrollRestoration></ScrollRestoration>
+      <SecondNavbar currNav="Shop" prevNav="home" />
+      <div className="lg:flex w-full max-w-7xl mx-auto gap-10 mt-10">
+        <SideBar onFilterChange={handleFilterChange} />
+        <MainContent filterOptions={filterOptions} />
+      </div>
+    </div>
+  );
 };
 
 export default Product;
