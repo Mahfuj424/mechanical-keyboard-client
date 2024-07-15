@@ -52,7 +52,7 @@ const SingleProduct = () => {
         <div className="md:flex px-4 lg:px-0 lg:gap-10">
           <div className="md:shrink-0 flex items-center">
             <img
-              className="h-48 w-full object-cover md:h-3/4 md:w-[400px]"
+              className="h-48 w-full object-cover rounded-md transition-transform duration-500 hover:scale-105 md:h-3/4 md:w-[400px]"
               src={product?.data?.image}
               alt={product?.data?.name}
             />
@@ -79,7 +79,7 @@ const SingleProduct = () => {
             <p className="mt-2 text-gray-600">{product?.data?.description}</p>
             <div className="mt-4">
               <div>Brand: A4TECH</div>
-              <div>Quantity: 50</div>
+              <div>Quantity: {product?.data?.quantity}</div>
               <div>Category: Mechanical</div>
             </div>
             <div className="my-5">
