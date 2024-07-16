@@ -1,8 +1,9 @@
+// SideBar.tsx
+
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
 import PriceRangeSlider from "./PriceRangeSlider";
 import CustomButton from "../ui/CustomButton";
-import { useGetProductsQuery } from "@/redux/api/baseApi";
 
 interface SideBarProps {
   onFilterChange: (newFilters: {
@@ -10,13 +11,9 @@ interface SideBarProps {
     maxPrice?: number;
     sortBy?: string;
   }) => void;
-  onClearFilters: () => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({
-  onFilterChange,
-  onClearFilters,
-}) => {
+const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
   const [sortBy, setSortBy] = useState("Default");
 
@@ -34,17 +31,6 @@ const SideBar: React.FC<SideBarProps> = ({
     });
   };
 
-  const [clear, setClear]=useState('')
-
-  const {data}= useGetProductsQuery(clear)
-
-  const handleClearFilters = () => {
-    setPriceRange([0, 200]);
-    setSortBy("Default");
-    onClearFilters();
-    setClear('')
-  };
-
   const dropdownOptions = [
     "Default",
     "Price - High to Low",
@@ -52,7 +38,7 @@ const SideBar: React.FC<SideBarProps> = ({
   ];
 
   return (
-    <div className="lg:max-w-[25%] w-full px-5">
+    <div className="max-w-[30%] w-full px-5">
       <div>
         <Dropdown
           options={dropdownOptions}
@@ -60,15 +46,10 @@ const SideBar: React.FC<SideBarProps> = ({
           onSelect={handleSortChange}
         />
       </div>
-      <div className="flex items-center mt-5 justify-center">
+      <div className="flex items-center mt-5 justify-center bg-gray-100">
         <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
           <h1 className="text-2xl mb-4">Price Range Slider</h1>
-          <PriceRangeSlider
-            min={0}
-            max={200}
-            value={priceRange}
-            onChange={handlePriceChange}
-          />
+          <PriceRangeSlider min={0} max={200} onChange={handlePriceChange} />
           <div className="mt-4">
             <p className="">
               Selected Price Range: ${priceRange[0]} - ${priceRange[1]}
@@ -77,7 +58,7 @@ const SideBar: React.FC<SideBarProps> = ({
         </div>
       </div>
       <div className="mt-5 flex justify-center">
-        <CustomButton name="Clear All Filters" onClick={handleClearFilters} />
+        <CustomButton onClick={()=>('')} name={"Clear All Filter"} />
       </div>
     </div>
   );

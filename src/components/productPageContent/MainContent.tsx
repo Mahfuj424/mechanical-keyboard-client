@@ -37,7 +37,10 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   }, [filterOptions]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+    const newSearchTerm = e.target.value;
+    setSearchTerm(newSearchTerm);
+    setFilters({ ...filters, searchTerm: newSearchTerm });
+    refetch();
   };
 
   const handleFocus = () => {
@@ -47,15 +50,6 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const handleBlur = () => {
     setIsFocused(false);
   };
-
-  const handleSearch = () => {
-    setFilters({ ...filters, searchTerm });
-    refetch();
-  };
-
-  useEffect(() => {
-    refetch();
-  }, [filters, refetch]);
 
   return (
     <div className="lg:max-w-[75%] w-full px-4 lg:px-0">
@@ -78,12 +72,6 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
           onBlur={handleBlur}
           className="outline-none w-full bg-transparent placeholder-gray-500 focus:placeholder-white text-gray-700"
         />
-        <button
-          onClick={handleSearch}
-          className="ml-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          Search
-        </button>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center w-full mt-14">

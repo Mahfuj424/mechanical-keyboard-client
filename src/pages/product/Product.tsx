@@ -14,7 +14,7 @@ const Product = () => {
     searchTerm: "",
   });
 
-  const handleFilterChange = (newFilters: any) => {
+  const handleFilterChange = (newFilters) => {
     setFilterOptions((prevFilters) => ({
       ...prevFilters,
       ...newFilters,
@@ -23,9 +23,9 @@ const Product = () => {
 
   return (
     <div className="mb-20">
-      <ScrollRestoration></ScrollRestoration>
-      <SecondNavbar currNav="Shop" prevNav="home" />
-      <div className="lg:flex w-full max-w-7xl mx-auto gap-10 mt-10">
+      <ScrollRestoration />
+      <SecondNavbar prevNav="home" currNav="product" />
+      <div className="flex w-full max-w-7xl mx-auto gap-10 mt-10">
         <SideBar onFilterChange={handleFilterChange} />
         <MainContent filterOptions={filterOptions} />
       </div>

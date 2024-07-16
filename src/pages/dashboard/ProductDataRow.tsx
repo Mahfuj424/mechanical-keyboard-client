@@ -1,25 +1,27 @@
-import { format } from "date-fns";
-import { deleteRoom, getRoom } from "../../api/rooms";
-import { AuthContext } from "../../providers/AuthProvider";
-import { useContext, useEffect, useState } from "react";
-import { upadateStatus } from "../../api/booking";
-import toast from "react-hot-toast";
-import DeleteModal from "../../components/Modal/DeleteModal";
-import UpdateRoomModal from "../../components/Modal/UpdateRoomModal";
+import DeleteProduct from "@/modal/DeleteProduct";
+import UpdateProductData from "@/modal/UpdateProductData";
+import { useDeleteProductMutation } from "@/redux/api/baseApi";
+import { useState } from "react";
 
-const ProductDataRow = ({ room, refetch }) => {
+const ProductDataRow = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deleteProduct, { isLoading, isSuccess, isError, error }] =
+    useDeleteProductMutation();
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  const modalHandler = (id) => {
-    deleteRoom(id).then((data) => {
-      refetch();
-      toast.success("delete room successfully");
-    });
+  const modalHandler = async (id: string) => {
+    try {
+      await deleteProduct(id).unwrap();
+      // Handle success (e.g., show a success message, refresh product list)
+      closeModal();
+    } catch (err) {
+      // Handle error (e.g., show an error message)
+      console.error("Failed to delete the product:", err);
+    }
   };
   return (
     <tr>
@@ -29,31 +31,21 @@ const ProductDataRow = ({ room, refetch }) => {
             <div className="block relative">
               <img
                 alt="profile"
-                src={room?.image}
-                className="mx-auto object-cover rounded h-10 w-15 "
+                src={product?.image}
+                className="mx-auto object-cover rounded h-10 w-16 "
               />
             </div>
           </div>
           <div className="ml-3">
-            <p className="text-gray-900 whitespace-no-wrap">{room?.title}</p>
+            <p className="text-gray-900 whitespace-no-wrap">{product?.name}</p>
           </div>
         </div>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">{room?.location}</p>
+        <p className="text-gray-900 whitespace-no-wrap">${product?.price}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">${room?.price}</p>
-      </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {format(new Date(room?.from), "P")}
-        </p>
-      </td>
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 whitespace-no-wrap">
-          {format(new Date(room?.to), "P")}
-        </p>
+        <p className="text-gray-900 whitespace-no-wrap">{product?.brand}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <span
@@ -66,11 +58,11 @@ const ProductDataRow = ({ room, refetch }) => {
           ></span>
           <span className="relative">Delete</span>
         </span>
-        <DeleteModal
+        <DeleteProduct
           isOpen={isOpen}
           closeModal={closeModal}
           modalHandler={modalHandler}
-          id={room?._id}
+          id={product?._id}
         />
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -84,12 +76,11 @@ const ProductDataRow = ({ room, refetch }) => {
           ></span>
           <span className="relative">Update</span>
         </span>
-        <UpdateRoomModal
+        <UpdateProductData
           isOpen={isEditModalOpen}
           setIsEditModalOpen={setIsEditModalOpen}
-          refetch={refetch}
-          room={room}
-          id={room?._id}
+          product={product}
+          id={product?._id}
         />
       </td>
     </tr>
