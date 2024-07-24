@@ -12,7 +12,7 @@ const CustomButton = ({ name, onClick }: TButtonProps) => {
   return (
     <div>
       <button
-        className="relative bg-red-500 text-lg font-semibold text-white py-3 px-6 rounded-md flex items-center justify-center overflow-hidden transition-all duration-500 hover:text-red-500"
+        className="relative bg-red-500 z-0 text-lg font-semibold text-white py-3 px-6 rounded-md flex items-center justify-center overflow-hidden transition-all duration-500 hover:text-red-500"
         onClick={onClick}
       >
         <span className="relative z-10 flex items-center">
