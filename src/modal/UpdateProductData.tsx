@@ -8,20 +8,23 @@ import { useUpdateProductMutation } from "@/redux/api/baseApi";
 const UpdateProductData = ({ isOpen, setIsEditModalOpen, product, id }) => {
   const [loading, setLoading] = useState(false);
   const [roomData, setRoomData] = useState(product);
-  const [uploadButtonText, setUploadButtonText] = useState("");
-const [updateProduct , {isLoading, isError}]=useUpdateProductMutation()
-
-
+  const [updateProduct] = useUpdateProductMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateProduct(roomData)
     setLoading(true);
-    setUploadButtonText("Uploading...!");
-    setIsEditModalOpen(false)
+    setIsEditModalOpen(false);
+
+    updateProduct(roomData)
+      .then(() => {
+        setLoading(false);
+        toast.success("Product Info Updated!");
+      })
+      .catch((error) => {
+        console.error("Error updating product:", error);
+        setLoading(false);
+      });
   };
-
-
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -63,8 +66,8 @@ const [updateProduct , {isLoading, isError}]=useUpdateProductMutation()
                 <UpdateRoomForm
                   handleSubmit={handleSubmit}
                   roomData={roomData}
-                  setRoomData={setRoomData}
                   loading={loading}
+                  setRoomData={setRoomData}
                 />
               </Dialog.Panel>
             </Transition.Child>

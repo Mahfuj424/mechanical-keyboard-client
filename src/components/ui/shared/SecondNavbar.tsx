@@ -13,7 +13,7 @@ const SecondNavbar = ({ currNav, prevNav }: TNavProps) => {
 
   return (
     <div className="bg-gray-100 pt-36 pb-10">
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+      <div className="w-full flex justify-between max-w-7xl px-4 lg:px-0 mx-auto py-10">
         <h1 className="text-3xl font-bold">{currNav}</h1>
         <nav className="text-gray-600 flex items-center">
           <Link

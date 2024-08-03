@@ -50,10 +50,20 @@ export const baseApi = createApi({
     }),
     updateProduct: builder.mutation({
       query: (options) => {
-        console.log('base api =>',options)
         return {
           url: `/product/${options._id}`,
           method: "PUT",
+          body: options,
+        };
+      },
+      invalidatesTags: ["product"],
+    }),
+    addProduct: builder.mutation({
+      query: (options) => {
+        console.log('base api =>',options)
+        return {
+          url: `/product`,
+          method: "POST",
           body: options,
         };
       },
@@ -67,6 +77,7 @@ export const {
   useGetProductByIdQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useAddProductMutation
 } = baseApi;
 
 export default baseApi;

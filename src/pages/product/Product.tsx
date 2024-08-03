@@ -25,7 +25,7 @@ const Product = () => {
     <div className="mb-20">
       <ScrollRestoration />
       <SecondNavbar prevNav="home" currNav="product" />
-      <div className="flex w-full max-w-7xl mx-auto gap-10 mt-10">
+      <div className="lg:flex w-full max-w-7xl mx-auto gap-10 mt-10">
         <SideBar onFilterChange={handleFilterChange} />
         <MainContent filterOptions={filterOptions} />
       </div>

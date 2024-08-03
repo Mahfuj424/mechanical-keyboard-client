@@ -38,7 +38,7 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
   ];
 
   return (
-    <div className="max-w-[30%] w-full px-5">
+    <div className="lg:max-w-[30%] w-full px-5">
       <div>
         <Dropdown
           options={dropdownOptions}

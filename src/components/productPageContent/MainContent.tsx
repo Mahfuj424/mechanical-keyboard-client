@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import CustomCard from "../ui/CustomCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import EmptyState from "../ui/shared/emptyState/EmptyState";
 
 interface Product {
   id: string;
@@ -80,11 +81,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
       ) : (
         <div>
           {isError ? (
-            <div className="flex justify-center items-center w-full mt-14">
-              <h1 className="text-3xl font-bold text-center text-red-500">
-                NO DATA FOUND
-              </h1>
-            </div>
+            <EmptyState message={'No Data Found'} name={'Back to Home'} address={'/'}/>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-8">
               {products?.data?.map((product: Product) => (

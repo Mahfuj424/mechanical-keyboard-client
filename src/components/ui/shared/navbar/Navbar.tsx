@@ -93,7 +93,7 @@ const Navbar = () => {
                       isActive
                         ? "text-red-500"
                         : "text-white"
-                    } hover:text-red-500 transition-all`
+                    } hover:text-red-500 transition-all duration-300`
                   }
                 >
                   {item.title}
@@ -103,7 +103,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link to={"/cart"} className="text-xl lg:block hidden text-white">
+        <Link to={"/cart"} className="text-xl hover:text-red-500 transition-all duration-300 lg:block hidden text-white">
           <BsCart3 />
         </Link>
 
@@ -122,7 +122,7 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } flex flex-col items-center justify-center`}
           >
-            <Link to={"/cart"} className="text-xl flex items-center -ms-10 mb-5 gap-2 text-black">
+            <Link to={"/cart"} className={`${location.pathname === '/cart' ? 'text-red-500' : 'text-black'} text-xl flex items-center -ms-10 mb-5 gap-2 text-black`}>
               <BsCart3 /> cart
             </Link>
             <ul className="space-y-4">
@@ -130,7 +130,13 @@ const Navbar = () => {
                 <li key={index} className="text-xl text-black">
                   <NavLink
                     to={item.url}
-                    className="flex items-center gap-1"
+                    className={({ isActive }) =>
+                      `${
+                        isActive
+                          ? "text-red-500"
+                          : "text-black"
+                      } hover:text-red-500 transition-all duration-300 flex items-center gap-1`
+                    }
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.title}
