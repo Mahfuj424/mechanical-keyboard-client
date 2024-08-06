@@ -25,7 +25,7 @@ const SecondNavbar = ({ currNav, prevNav }: TNavProps) => {
           <span className="mx-2">
             <FaAngleRight />
           </span>
-          <span>{currNav}</span>
+          <span className="text-red-500 font-semibold">{currNav}</span>
         </nav>
       </div>
     </div>
