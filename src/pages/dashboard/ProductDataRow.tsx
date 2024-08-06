@@ -2,6 +2,7 @@ import DeleteProduct from "@/modal/DeleteProduct";
 import UpdateProductData from "@/modal/UpdateProductData";
 import { useDeleteProductMutation } from "@/redux/api/baseApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ProductDataRow = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +17,7 @@ const ProductDataRow = ({ product }) => {
   const modalHandler = async (id: string) => {
     try {
       await deleteProduct(id).unwrap();
+      toast.success('Product successfully deleted')
       // Handle success (e.g., show a success message, refresh product list)
       closeModal();
     } catch (err) {
