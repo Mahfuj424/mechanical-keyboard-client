@@ -1,4 +1,3 @@
-import { FaCartPlus } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import Rating from "react-rating-stars-component";
 import AddCardButton from "./AddCardButton";
@@ -23,7 +22,6 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="relative border rounded-md p-4 shadow-md group overflow-hidden">
       <div className="relative overflow-hidden h-[300px]">
-        {" "}
         {/* Set a fixed height */}
         <img
           src={product?.image}
@@ -58,8 +56,8 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
             size={24}
             activeColor="#ffd700"
             edit={false}
+            isHalf={true} // Enable half-stars
           />
-          <span className="ml-2">({product?.reviews})</span>
         </div>
       </div>
       <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

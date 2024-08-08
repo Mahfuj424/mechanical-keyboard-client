@@ -1,8 +1,8 @@
 import AddCardButton from "@/components/ui/AddCardButton";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import { useGetProductByIdQuery } from "@/redux/api/baseApi";
-import React from "react";
 import { FaShieldAlt, FaUndo, FaMoneyBillWave } from "react-icons/fa";
+import Rating from "react-rating-stars-component";
 import { ScrollRestoration, useParams } from "react-router-dom";
 
 type TProductProps = {
@@ -22,27 +22,12 @@ type TProductProps = {
   images: string[];
 };
 
-const product: TProductProps = {
-  name: "Lorem ipsum fashion three",
-  price: 16.72,
-  originalPrice: 19.0,
-  discount: 12,
-  rating: 4.5,
-  ratingCount: 7,
-  description:
-    "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem.",
-  warranty: "1 Year Brand Warranty",
-  returnPolicy: "30 Days Return Policy",
-  codAvailable: true,
-  sku: "asdf103",
-  category: "fashion, women",
-  tags: ["fashion", "women"],
-  images: ["https://i.postimg.cc/rFmVrKLv/keyboard4.jpg"],
-};
+
 
 const SingleProduct = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
+  const { data: product } = useGetProductByIdQuery(id);
+  console.log(product);
 
   return (
     <div>
@@ -67,14 +52,14 @@ const SingleProduct = () => {
               </span>
             </div>
             <div className="mt-2 flex items-center">
-              <div className="text-yellow-500">
-                {Array.from(
-                  { length: Math.round(product?.data?.rating) },
-                  (_, i) => (
-                    <span key={i}>&#9733;</span>
-                  )
-                )}
-              </div>
+              <Rating
+                count={5}
+                value={product?.data?.rating}
+                size={24}
+                activeColor="#ffd700"
+                edit={false}
+                isHalf={true} // Enable half-stars
+              />
             </div>
             <p className="mt-2 text-gray-600">{product?.data?.description}</p>
             <div className="mt-4">

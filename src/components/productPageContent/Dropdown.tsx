@@ -1,28 +1,24 @@
-// Dropdown.tsx
-
 import React, { useState } from "react";
-import { FaChevronDown } from "react-icons/fa"; // Import the icon
+import { FaChevronDown } from "react-icons/fa";
 
 interface DropdownProps {
   options: string[];
-  defaultOption: string;
+  selectedOption: string;
   onSelect: (option: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   options,
-  defaultOption,
+  selectedOption,
   onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
     onSelect(option);
     setIsOpen(false);
   };

@@ -1,69 +1,51 @@
 import { TbFidgetSpinner } from "react-icons/tb";
 // import { categories } from "../Categories/categoriesData";
-const UpdateRoomForm = ({
-  handleSubmit,
-  loading,
-  roomData,
-  setRoomData
-}) => {
+const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-10">
-          <div className="space-y-1 text-sm">
-            <label htmlFor="location" className="block text-gray-600 uppercase">
-              name
-            </label>
-            <input
-              className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-              name="location"
-              value={roomData?.name}
-              onChange={(event) =>
-                setRoomData({ ...roomData, name: event.target.value })
-              }
-              id="location"
-              type="text"
-              placeholder="Location"
-              required
-            />
-          </div>
-          <div className="space-y-1 text-sm">
-            <label htmlFor="title" className="block text-gray-600 uppercase">
-              Brand
-            </label>
-            <input
-              value={roomData?.brand}
-              onChange={(event) =>
-                setRoomData({ ...roomData, brand: event.target.value })
-              }
-              className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-              name="title"
-              id="title"
-              type="text"
-              placeholder="Title"
-              required
-            />
+          <div className="flex gap-3">
+            <div className="space-y-1 text-sm">
+              <label
+                htmlFor="location"
+                className="block text-gray-600 uppercase"
+              >
+                name
+              </label>
+              <input
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                name="location"
+                value={roomData?.name}
+                onChange={(event) =>
+                  setRoomData({ ...roomData, name: event.target.value })
+                }
+                id="location"
+                type="text"
+                placeholder="Location"
+                required
+              />
+            </div>
+
+            <div className="space-y-1 text-sm">
+              <label htmlFor="title" className="block text-gray-600 uppercase">
+                image url
+              </label>
+              <input
+                value={roomData?.image}
+                onChange={(event) =>
+                  setRoomData({ ...roomData, image: event.target.value })
+                }
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                name="title"
+                id="title"
+                type="text"
+                placeholder="Title"
+                required
+              />
+            </div>
           </div>
 
-          <div className="space-y-1 text-sm">
-            <label htmlFor="title" className="block text-gray-600 uppercase">
-              image url
-            </label>
-            <input
-              value={roomData?.image}
-              onChange={(event) =>
-                setRoomData({ ...roomData, image: event.target.value })
-              }
-              className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-              name="title"
-              id="title"
-              type="text"
-              placeholder="Title"
-              required
-            />
-          </div>
-
-          
           <div className="flex justify-between gap-2">
             <div className="space-y-1 text-sm">
               <label htmlFor="price" className="block text-gray-600">
@@ -103,25 +85,41 @@ const UpdateRoomForm = ({
           </div>
 
           <div className="flex justify-between gap-2">
-            
+            <div className="space-y-1 text-sm">
+              <label htmlFor="title" className="block text-gray-600 uppercase">
+                Rating
+              </label>
+              <input
+                value={roomData?.rating}
+                onChange={(event) =>
+                  setRoomData({ ...roomData, rating: event.target.value })
+                }
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                name="title"
+                id="title"
+                type="text"
+                placeholder="Title"
+                required
+              />
+            </div>
 
             <div className="space-y-1 text-sm">
-            <label htmlFor="title" className="block text-gray-600 uppercase">
-              Rating
-            </label>
-            <input
-              value={roomData?.rating}
-              onChange={(event) =>
-                setRoomData({ ...roomData, rating: event.target.value })
-              }
-              className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-              name="title"
-              id="title"
-              type="text"
-              placeholder="Title"
-              required
-            />
-          </div>
+              <label htmlFor="title" className="block text-gray-600 uppercase">
+                Brand
+              </label>
+              <input
+                value={roomData?.brand}
+                onChange={(event) =>
+                  setRoomData({ ...roomData, brand: event.target.value })
+                }
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                name="title"
+                id="title"
+                type="text"
+                placeholder="Title"
+                required
+              />
+            </div>
           </div>
 
           <div className="space-y-1 text-sm">
@@ -148,7 +146,7 @@ const UpdateRoomForm = ({
           {loading ? (
             <TbFidgetSpinner className="m-auto animate-spin" size={24} />
           ) : (
-             "Update"
+            "Update"
           )}
         </button>
       </form>

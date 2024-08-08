@@ -1,5 +1,5 @@
-import { useGetProductsQuery } from "@/redux/api/baseApi";
 import React, { useState, useEffect } from "react";
+import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaSearch } from "react-icons/fa";
 import CustomCard from "../ui/CustomCard";
 import ScaleLoader from "react-spinners/ScaleLoader";

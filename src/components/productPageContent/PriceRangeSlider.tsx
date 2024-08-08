@@ -1,44 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface PriceRangeSliderProps {
   min: number;
   max: number;
+  value: [number, number];
   onChange: (range: [number, number]) => void;
 }
 
 const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
   min,
   max,
+  value,
   onChange,
 }) => {
-  const [minValue, setMinValue] = useState(min);
-  const [maxValue, setMaxValue] = useState(max);
+  const [minValue, setMinValue] = useState(value[0]);
+  const [maxValue, setMaxValue] = useState(value[1]);
+
+  useEffect(() => {
+    setMinValue(value[0]);
+    setMaxValue(value[1]);
+  }, [value]);
 
   const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(Number(event.target.value), maxValue - 1);
-    setMinValue(value);
-    onChange([value, maxValue]);
+    const newValue = Math.min(Number(event.target.value), maxValue - 1);
+    setMinValue(newValue);
+    onChange([newValue, maxValue]);
   };
 
   const handleMaxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.max(Number(event.target.value), minValue + 1);
-    setMaxValue(value);
-    onChange([minValue, value]);
-  };
-
-  const handleSliderChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    isMin: boolean
-  ) => {
-    if (isMin) {
-      const value = Math.min(Number(event.target.value), maxValue - 1);
-      setMinValue(value);
-      onChange([value, maxValue]);
-    } else {
-      const value = Math.max(Number(event.target.value), minValue + 1);
-      setMaxValue(value);
-      onChange([minValue, value]);
-    }
+    const newValue = Math.max(Number(event.target.value), minValue + 1);
+    setMaxValue(newValue);
+    onChange([minValue, newValue]);
   };
 
   return (
@@ -49,18 +41,16 @@ const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
           min={min}
           max={max}
           value={minValue}
-          onChange={(e) => handleSliderChange(e, false)}
+          onChange={(e) => handleMinChange(e)}
           className="absolute w-full h-2 appearance-none bg-gray-300 rounded-lg cursor-pointer z-10 hidden"
-          style={{ zIndex: minValue > max - 100 ? 1 : 0 }}
         />
         <input
           type="range"
           min={min}
           max={max}
           value={maxValue}
-          onChange={(e) => handleSliderChange(e, false)}
+          onChange={(e) => handleMaxChange(e)}
           className="absolute w-full h-2 appearance-none bg-gray-300 rounded-lg cursor-pointer "
-          style={{ zIndex: maxValue > min - 100 ? 1 : 0 }}
         />
       </div>
       <div className="flex justify-between mt-2">

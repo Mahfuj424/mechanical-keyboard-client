@@ -50,19 +50,19 @@ const Footer = () => {
               <FaPhone className="inline" /> +457 789 789 65
             </p>
             <div className="flex space-x-4 mt-4">
-              <a href="#">
+              <a href="https://web.facebook.com/" target="_blank">
                 <FaFacebookF />
               </a>
-              <a href="#">
+              <a href="https://twitter.com/" target="_blank">
                 <FaTwitter />
               </a>
-              <a href="#">
+              <a href="https://www.google.com/" target="_blank">
                 <FaGooglePlusG />
               </a>
-              <a href="#">
+              <a href="https://www.youtube.com/" target="_blank">
                 <FaYoutube />
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/" target="_blank">
                 <FaInstagram />
               </a>
             </div>
