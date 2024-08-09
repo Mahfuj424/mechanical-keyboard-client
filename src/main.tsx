@@ -6,12 +6,15 @@ import { router } from "./routes/router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Toaster } from "react-hot-toast";
+import { CartProvider } from "./CartContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <Toaster />
-      <RouterProvider router={router}></RouterProvider>
-    </Provider>
+    <CartProvider>
+      <Provider store={store}>
+        <Toaster />
+        <RouterProvider router={router}></RouterProvider>
+      </Provider>
+    </CartProvider>
   </React.StrictMode>
 );

@@ -3,12 +3,14 @@ import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { SlMenu } from "react-icons/sl";
 import { BsCart3 } from "react-icons/bs";
+import { useCart } from "@/CartContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const location = useLocation();
+  const { cartCount } = useCart();
 
   // Define the routes that should have a white background initially
   const whiteBgRoutes = ["/product", "/about", "/contact", "/dashboard"];
@@ -74,9 +76,9 @@ const Navbar = () => {
         location?.pathname === "/" ? bgColor : "bg-gray-900"
       }`}
     >
-      <div className="navbar max-w-7xl px-4 lg:px-0 mx-auto flex items-center justify-between py-4">
+      <div className="navbar max-w-7xl px-4 xl:px-0 mx-auto flex items-center justify-between py-4">
         {/* Logo */}
-        <Link to='/' className="flex items-center justify-center">
+        <Link to="/" className="flex items-center justify-center">
           <h1 className="text-6xl font-semibold text-red-500">E-</h1>
           <h1 className={`text-white text-2xl font-semibold mt-3`}>Market</h1>
         </Link>
@@ -90,9 +92,7 @@ const Navbar = () => {
                   to={item.url}
                   className={({ isActive }) =>
                     `${
-                      isActive
-                        ? "text-red-500"
-                        : "text-white"
+                      isActive ? "text-red-500" : "text-white"
                     } hover:text-red-500 transition-all duration-300`
                   }
                 >
@@ -103,7 +103,10 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link to={"/cart"} className="text-xl hover:text-red-500 transition-all duration-300 lg:block hidden text-white">
+        <Link
+          to={"/cart"}
+          className="text-xl hover:text-red-500 transition-all duration-300 lg:block hidden text-white"
+        >
           <BsCart3 />
         </Link>
 
@@ -122,8 +125,19 @@ const Navbar = () => {
               isMenuOpen ? "translate-x-0" : "translate-x-full"
             } flex flex-col items-center justify-center`}
           >
-            <Link to={"/cart"} className={`${location.pathname === '/cart' ? 'text-red-500' : 'text-black'} text-xl flex items-center -ms-10 mb-5 gap-2 text-black`}>
-              <BsCart3 /> cart
+            <Link
+              to="/cart"
+              className={`${
+                location.pathname === "/cart" ? "text-red-500" : "text-black"
+              } text-xl flex items-center gap-2 relative`}
+            >
+              <BsCart3 />
+              cart
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                  {cartCount}
+                </span>
+              )}
             </Link>
             <ul className="space-y-4">
               {navItems.map((item, index) => (
@@ -132,9 +146,7 @@ const Navbar = () => {
                     to={item.url}
                     className={({ isActive }) =>
                       `${
-                        isActive
-                          ? "text-red-500"
-                          : "text-black"
+                        isActive ? "text-red-500" : "text-black"
                       } hover:text-red-500 transition-all duration-300 flex items-center gap-1`
                     }
                     onClick={() => setIsMenuOpen(false)}

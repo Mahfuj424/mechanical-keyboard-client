@@ -18,7 +18,7 @@ const MyListings = () => {
 
   return (
     <>
-      <div className="lg:max-w-7xl mx-auto px-4 lg:px-0 mt-5">
+      <div className="lg:max-w-7xl mx-auto px-4 xl:px-0 mt-5">
         <AddProductData
           isOpen={isEditModalOpen}
           setIsEditModalOpen={setIsEditModalOpen}
@@ -29,7 +29,7 @@ const MyListings = () => {
           {products?.data &&
           Array.isArray(products?.data) &&
           products?.data?.length > 0 ? (
-            <div className="w-full max-w-7xl px-4 lg:px-0 mx-auto">
+            <div className="w-full max-w-7xl px-4 xl:px-0 mx-auto">
               <div className="py-8">
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

@@ -24,7 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div className="relative inline-block text-center w-full">
+    <div className="relative inline-block w-full ps-4 lg:ps-0">
       <div>
         <button
           type="button"
@@ -37,7 +37,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       </div>
 
       {isOpen && (
-        <div className="origin-top-right z-10 absolute right-0 mt-2 w-[95%] me-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right z-10 absolute right-0 mt-2 w-[92%] me-7 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div
             className="py-1"
             role="menu"

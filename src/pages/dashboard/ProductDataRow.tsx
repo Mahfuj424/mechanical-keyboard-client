@@ -3,6 +3,7 @@ import UpdateProductData from "@/modal/UpdateProductData";
 import { useDeleteProductMutation } from "@/redux/api/baseApi";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ProductDataRow = ({ product }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ const ProductDataRow = ({ product }) => {
   const modalHandler = async (id: string) => {
     try {
       await deleteProduct(id).unwrap();
-      toast.success('Product successfully deleted')
+      toast.success("Product successfully deleted");
       // Handle success (e.g., show a success message, refresh product list)
       closeModal();
     } catch (err) {
@@ -39,7 +40,11 @@ const ProductDataRow = ({ product }) => {
             </div>
           </div>
           <div className="ml-3">
-            <p className="text-gray-900 whitespace-no-wrap">{product?.name}</p>
+            <Link to={`/card-details/${product?._id}`}>
+              <p className="text-gray-900 hover:underline font-semibold whitespace-no-wrap">
+                {product?.name}
+              </p>
+            </Link>
           </div>
         </div>
       </td>

@@ -17,7 +17,11 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
   const [sortBy, setSortBy] = useState("Default");
 
   useEffect(() => {
-    onFilterChange({ minPrice: priceRange[0], maxPrice: priceRange[1], sortBy });
+    onFilterChange({
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+      sortBy,
+    });
   }, [priceRange, sortBy]);
 
   const handlePriceChange = (newRange: [number, number]) => {
@@ -54,10 +58,15 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
           onSelect={handleSortChange}
         />
       </div>
-      <div className="flex items-center mt-5 justify-center bg-gray-100">
+      <div className="flex items-center mt-5 px-4 xl:px-0 justify-center bg-gray-100">
         <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
           <h1 className="text-2xl mb-4">Price Range Slider</h1>
-          <PriceRangeSlider min={0} max={200} value={priceRange} onChange={handlePriceChange} />
+          <PriceRangeSlider
+            min={0}
+            max={200}
+            value={priceRange}
+            onChange={handlePriceChange}
+          />
           <div className="mt-4">
             <p className="">
               Selected Price Range: ${priceRange[0]} - ${priceRange[1]}

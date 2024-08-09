@@ -10,13 +10,13 @@ const Home = () => {
   return (
     <div className="space-y-24">
       <HeroSection />
-      <div className="px-5 lg:px-0 space-y-24">
+      <div className="px-5 xl:px-0 space-y-24">
         <Service />
         <FeaturedProduct />
         <FeaturesBrand />
-        <WhyChoose/>
-        <ExtraStudy/>
-        <ReviewSection/>
+        <WhyChoose />
+        <ExtraStudy />
+        <ReviewSection />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import Main from "@/layouts/Main";
 import About from "@/pages/about/About";
-import Cart from "@/pages/cart/Cart";
+import CartPage from "@/pages/cart/CartPage";
 import Contact from "@/pages/contact/Contact";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Home from "@/pages/home/Home";
@@ -11,36 +11,36 @@ import { createBrowserRouter } from "react-router-dom";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main/>,
-    children:[
+    element: <Main />,
+    children: [
       {
-        path:'/',
-        element:<Home/>
+        path: "/",
+        element: <Home />,
       },
       {
-        path:'/product',
-        element:<Product/>
+        path: "/product",
+        element: <Product />,
       },
       {
-        path:'/about',
-        element:<About/>
+        path: "/about",
+        element: <About />,
       },
       {
-        path:'/contact',
-        element:<Contact/>
+        path: "/contact",
+        element: <Contact />,
       },
       {
-        path:'/dashboard',
-        element:<Dashboard/>
+        path: "/dashboard",
+        element: <Dashboard />,
       },
       {
-        path:'/cart',
-        element:<Cart/>
+        path: "/cart",
+        element: <CartPage />,
       },
       {
-        path:'cart-details/:id',
-        element:<SingleProduct/>
-      }
-    ]
+        path: "card-details/:id",
+        element: <SingleProduct />,
+      },
+    ],
   },
 ]);

@@ -53,7 +53,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   };
 
   return (
-    <div className="lg:max-w-[75%] w-full px-4 lg:px-0">
+    <div className="lg:max-w-[75%] w-full px-4 xl:px-0">
       <div
         className={`flex items-center w-full border rounded-md mt-10 lg:mt-0 px-4 py-2 bg-white ${
           isFocused ? "border-red-500" : "border-gray-300"
@@ -81,7 +81,11 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
       ) : (
         <div>
           {isError ? (
-            <EmptyState message={'No Data Found'} name={'Back to Home'} address={'/'}/>
+            <EmptyState
+              message={"No Data Found"}
+              name={"Back to Home"}
+              address={"/"}
+            />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-8">
               {products?.data?.map((product: Product) => (

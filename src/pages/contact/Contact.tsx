@@ -10,7 +10,7 @@ const ContactForm = () => {
           backgroundImage: `url(https://solutek-html.netlify.app/assets/images/contact-bg2.png)`,
         }}
       >
-        <div className="container lg:max-w-7xl mx-auto px-4 lg:px-0 mt-5">
+        <div className="container lg:max-w-7xl mx-auto px-4 xl:px-0 mt-5">
           <div className="bg-white bg-opacity-80 p-8 rounded-xl shadow-lg max-w-2xl">
             <h2 className="text-2xl font-bold mb-6 text-red-500">Contact Us</h2>
             <p className="text-lg mb-6">
