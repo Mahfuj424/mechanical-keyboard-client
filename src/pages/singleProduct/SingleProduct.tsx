@@ -117,7 +117,7 @@ const SingleProduct = () => {
               <div>Category: Mechanical</div>
             </div>
             <div className="my-5">
-              <AddCardButton name={"Add To Cart"} />
+              <AddCardButton name={"Add To Cart"} product={product?.data}/>
             </div>
             <div className="mt-4 text-gray-500">
               <div className="flex items-center">

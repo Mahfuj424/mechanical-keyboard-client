@@ -1,4 +1,4 @@
-import React from "react";
+import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
@@ -22,6 +22,14 @@ const CartItem = ({
   onIncrease,
   onDecrease,
 }: CartItemProps) => {
+  const { data } = useGetProductsQuery("");
+
+  // Find the product details from the fetched data
+  const product = data?.data?.find((product) => product._id === item._id);
+
+  // Define the maximum quantity based on the fetched product details
+  const maxQuantity = product?.quantity || Infinity; // Use Infinity if maxQuantity is not available
+
   return (
     <tr className="border-b">
       <td className="p-4 flex items-center">
@@ -48,7 +56,13 @@ const CartItem = ({
         <div className="flex items-center justify-center">
           <button
             className="text-gray-500 hover:text-gray-700 px-2"
-            onClick={() => onDecrease(item?._id)}
+            onClick={() => {
+              if (item?.quantity === 1) {
+                onRemove(item?._id); // Call the remove function if quantity is 1
+              } else {
+                onDecrease(item?._id); // Otherwise, decrease the quantity
+              }
+            }}
           >
             <FaMinus />
           </button>
@@ -60,7 +74,11 @@ const CartItem = ({
           />
           <button
             className="text-gray-500 hover:text-gray-700 px-2"
-            onClick={() => onIncrease(item?._id)}
+            onClick={() => {
+              if (item?.quantity < maxQuantity) {
+                onIncrease(item?._id); // Only increase if quantity is less than maxQuantity
+              }
+            }}
           >
             <FaPlus />
           </button>

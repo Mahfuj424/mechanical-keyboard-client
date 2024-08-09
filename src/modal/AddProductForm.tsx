@@ -26,9 +26,9 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onClose }) => {
       image: imageURL,
       description,
       brand,
-      quantity,
-      rating,
-      price,
+      quantity: quantity ?? 0,
+      rating: parseFloat((rating ?? 0).toFixed(1)), // One decimal place for rating
+      price: parseFloat((price ?? 0).toFixed(2)),
     };
     setLoading(true);
     addProduct(productDetails)
@@ -45,7 +45,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="h-[80vh] flex justify-center items-center  my-10">
+    <div className="h-[80vh] flex justify-center items-center my-10">
       <div className="w-full max-w-lg p-8 bg-white rounded-xl shadow-lg">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-10">
@@ -94,6 +94,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onClose }) => {
                   name="price"
                   id="price"
                   type="number"
+                  step="0.01" // Allows decimal values like 34.50
                   placeholder="Price"
                   required
                 />
@@ -127,6 +128,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({ onClose }) => {
                   name="rating"
                   id="rating"
                   type="number"
+                  step="0.1" // Allows decimal values like 3.5
                   placeholder="Rating"
                   required
                 />

@@ -13,13 +13,16 @@ const AddCardButton = ({ name, product }: TButtonProps) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
-    toast.success(
-      "Item added to cart. Note: Cart data may be lost if you reload the page.",
-      {
-        duration: 6000, // Duration in milliseconds (6000ms = 6 seconds)
-      }
-    ); // Display a toast notification
+    if (product?.quantity <= product?.quantity) {
+      dispatch(addToCart(product));
+      toast.success(
+        "Item added to cart. Note: Cart data may be lost if you reload the page.",
+        {
+          duration: 6000, // Duration in milliseconds (6000ms = 6 seconds)
+        }
+      );
+    }
+    toast.error('Quantity not available')
   };
 
   return (
