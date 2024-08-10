@@ -3,7 +3,9 @@ import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import { useGetProductByIdQuery } from "@/redux/api/baseApi";
 import { FaShieldAlt, FaUndo, FaMoneyBillWave } from "react-icons/fa";
 import { ScrollRestoration, useParams } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectCartItems } from "@/redux/features/cartSlice";
 
 type TProductProps = {
   name: string;
@@ -25,7 +27,27 @@ type TProductProps = {
 const SingleProduct = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product } = useGetProductByIdQuery(id);
-  console.log(product);
+  const cartItems = useSelector(selectCartItems)
+  console.log("cart items =>", cartItems);
+  const cartCount = cartItems.length
+
+  useEffect(() => {
+    if (cartCount > 0) {
+      const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+        const warningMessage =
+          "Your cart data may be lost if you reload the page. Are you sure you want to leave?";
+        event.preventDefault();
+        event.returnValue = warningMessage; // For most browsers
+        return warningMessage; // For some browsers
+      };
+
+      window.addEventListener("beforeunload", handleBeforeUnload);
+
+      return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }
+  }, []);
 
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);

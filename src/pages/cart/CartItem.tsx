@@ -1,4 +1,3 @@
-import AddCardButton from "@/components/ui/AddCardButton";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
@@ -28,7 +27,6 @@ const CartItem = ({
 
   // Find the product details from the fetched data
   const product = data?.data?.find((product) => product._id === item._id);
-  console.log(product);
 
   // Define the maximum quantity based on the fetched product details
   const maxQuantity = product?.quantity || Infinity; // Use Infinity if maxQuantity is not available
@@ -84,7 +82,7 @@ const CartItem = ({
               if (item?.quantity < maxQuantity) {
                 onIncrease(item?._id); // Only increase if quantity is less than maxQuantity
               } else {
-                toast.error("No Available Product"); // Show toast if max quantity is reached
+                toast.error("same product no more"); // Show toast if max quantity is reached
               }
             }}
           >
@@ -93,7 +91,6 @@ const CartItem = ({
         </div>
       </td>
 
-      
       <td className="p-4">
         <div className="text-sm font-medium text-gray-900">
           ${(item?.price * item?.quantity)?.toFixed(2)}

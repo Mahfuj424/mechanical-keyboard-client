@@ -3,7 +3,6 @@ import { FaCartPlus } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { TProduct } from "./CustomCard";
 import toast from "react-hot-toast";
-import { useState } from "react";
 
 type TButtonProps = {
   name: string;
@@ -11,21 +10,18 @@ type TButtonProps = {
   quantity: number;
 };
 
-const AddCardButton = ({ name, product, quantity }: TButtonProps) => {
-  console.log(quantity);
-  console.log("product =>", product?.quantity);
+const AddCardButton = ({ name, product }: TButtonProps) => {
   const dispatch = useDispatch();
-  // const [available, setAvailable]= useState('')
 
   const handleAddToCart = () => {
     if (product?.quantity === 0) {
-      toast.error("Product not available");
+      toast.error("Product not available",{position:'top-left'});
     } else {
       dispatch(addToCart(product));
       toast.success(
         "Item added to cart. Note: Cart data may be lost if you reload the page.",
         {
-          duration: 6000, // Duration in milliseconds (6000ms = 6 seconds)
+          duration: 5000, // Duration in milliseconds (6000ms = 6 seconds)
         }
       );
     }

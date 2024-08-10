@@ -33,10 +33,6 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const [searchTerm, setSearchTerm] = useState(filterOptions.searchTerm);
   const [isFocused, setIsFocused] = useState(false);
   const [filters, setFilters] = useState(filterOptions);
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(
-    filterOptions.searchTerm
-  );
-
 
   const {
     data: products = [],
@@ -45,30 +41,22 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
     refetch,
   } = useGetProductsQuery(filters);
 
-  // Debounced refetch function
-  const debouncedRefetch = useCallback(
-    debounce(() => refetch(), 200), // Adjust the delay as needed
-    [refetch]
+  const handleSearch = useCallback(
+    debounce(() => {
+      setFilters({ ...filters, searchTerm });
+      refetch();
+    }, 200),
+    [searchTerm, filters, refetch]
   );
-
-  useEffect(() => {
-    setFilters(filterOptions);
-    setSearchTerm(filterOptions.searchTerm);
-  }, [filterOptions]);
-
-  useEffect(() => {
-    setDebouncedSearchTerm(searchTerm);
-  }, [searchTerm]);
-
-  useEffect(() => {
-    if (debouncedSearchTerm !== filters.searchTerm) {
-      setFilters({ ...filters, searchTerm: debouncedSearchTerm });
-      debouncedRefetch();
-    }
-  }, [debouncedSearchTerm, filters, debouncedRefetch]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const handleFocus = () => {
@@ -78,7 +66,6 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const handleBlur = () => {
     setIsFocused(false);
   };
-  console.log(products?.data);
 
   return (
     <div className="lg:max-w-[75%] w-full px-4 xl:px-0">
@@ -99,8 +86,15 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
           onChange={handleInputChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           className="outline-none w-full bg-transparent placeholder-gray-500 focus:placeholder-white text-gray-700"
         />
+        <button
+          onClick={handleSearch}
+          className="ml-2 px-4 py-2 bg-red-500 text-white rounded-md"
+        >
+          Search
+        </button>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center w-full mt-14">

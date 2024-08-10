@@ -9,9 +9,7 @@ const Cart = ({ items, onRemove, onIncrease, onDecrease }) => {
           <tr>
             <th className="p-4 text-center font-bold text-gray-700">Product</th>
             <th className="p-4 text-left font-bold text-gray-700">Price</th>
-            <th className="p-4 text-center font-bold text-gray-700">
-              Quantity
-            </th>
+            <th className="p-4 text-center font-bold text-gray-700">Quantity</th>
             <th className="p-4 text-left font-bold text-gray-700">Total</th>
             <th className="p-4 text-center font-bold text-gray-700">Remove</th>
           </tr>

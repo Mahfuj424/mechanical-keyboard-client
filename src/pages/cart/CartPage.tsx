@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
@@ -9,10 +8,12 @@ import {
   increaseQuantity,
   removeFromCart,
 } from "@/redux/features/cartSlice";
+import { useEffect } from "react";
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state: any) => state.cart?.items); // Correctly typed if using TypeScript
+  const items = useSelector((state: any) => state.cart?.items);
+  console.log(items); // Correctly typed if using TypeScript
 
   const handleRemove = (id: string) => {
     dispatch(removeFromCart(id));
@@ -36,7 +37,21 @@ const CartPage = () => {
     );
   };
 
-  
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      const warningMessage =
+        "Your cart data may be lost if you reload the page. Are you sure you want to leave?";
+      event.preventDefault();
+      event.returnValue = warningMessage; // For most browsers
+      return warningMessage; // For some browsers
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <div>

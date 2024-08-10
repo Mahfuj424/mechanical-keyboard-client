@@ -1,7 +1,10 @@
 import CustomButton from "@/components/ui/CustomButton";
-import React from "react";
+import { Link } from "react-router-dom";
 
 const CartTotals = ({ subtotal, shipping = "Free Shipping", total }) => {
+  // Calculate the total quantity of items
+
+
   return (
     <div className="p-6 border rounded-md bg-white lg:w-[500px] w-full mt-10">
       <h2 className="text-lg font-bold mb-4">Cart Totals</h2>
@@ -19,11 +22,10 @@ const CartTotals = ({ subtotal, shipping = "Free Shipping", total }) => {
         <span className="text-lg font-bold">Total</span>
         <span className="text-lg font-bold">${total?.toFixed(2)}</span>
       </div>
-      <div className="mt-6">
-        <CustomButton
-          name="Proceed To CheckOut"
-          onClick={() => ""}
-        ></CustomButton>
+      <div className={`mt-6 ${total > 0 ? "block" : "hidden"}`}>
+        <Link to="/checkOut">
+          <CustomButton name="Proceed To CheckOut" onClick={() => ""} />
+        </Link>
       </div>
     </div>
   );

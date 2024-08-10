@@ -1,6 +1,7 @@
 import Main from "@/layouts/Main";
 import About from "@/pages/about/About";
 import CartPage from "@/pages/cart/CartPage";
+import CheckOut from "@/pages/checkOut/CheckOut";
 import Contact from "@/pages/contact/Contact";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import Home from "@/pages/home/Home";
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
         path: "card-details/:id",
         element: <SingleProduct />,
       },
+      {
+        path:'/checkOut',
+        element:<CheckOut/>
+      }
     ],
   },
 ]);
