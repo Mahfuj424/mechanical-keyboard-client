@@ -10,7 +10,17 @@ import { Link } from "react-router-dom";
 const FeaturedProduct = () => {
   const { data: products, isLoading, isError } = useGetProductsQuery({});
 
-  console.log(products?.data);
+  // Sort and slice the products once
+  const sortedProducts = [...(products?.data || [])]
+    .sort(
+      (a: any, b: any) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 6);
+
+  const firstFourProducts = sortedProducts.slice(0, 4);
+  const lastTwoProducts = sortedProducts.slice(4, 6);
+
   return (
     <div>
       <SectionTitle
@@ -21,14 +31,21 @@ const FeaturedProduct = () => {
       />
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mx-auto mt-8">
-          {products?.data?.slice(0, 4).map((product: any) => (
-            <CustomCard key={product?._id} id={product?._id} product={product} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto mt-8">
+          {firstFourProducts?.map((product: any) => (
+            <CustomCard key={product?._id} product={product} />
           ))}
+          <div className="col-span-4 flex justify-center gap-8">
+            {lastTwoProducts?.map((product: any) => (
+              <div className="w-1/2 md:w-1/3 lg:w-1/4" key={product?._id}>
+                <CustomCard product={product} />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex justify-center mt-5">
-          <Link to='/product'>
-            <CustomButton name={"See More"} onClick={""}/>
+          <Link to="/product">
+            <CustomButton name={"See More"} onClick={() => ""} />
           </Link>
         </div>
       </div>

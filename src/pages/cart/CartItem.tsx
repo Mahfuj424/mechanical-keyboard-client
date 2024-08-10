@@ -68,7 +68,7 @@ const CartItem = ({
           </button>
           <input
             type="text"
-            value={item?.quantity}
+            value={item?.quantity === maxQuantity ? maxQuantity : item?.quantity }
             readOnly
             className="w-12 text-center border border-gray-300 rounded px-2"
           />

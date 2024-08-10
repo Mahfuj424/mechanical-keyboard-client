@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaSearch } from "react-icons/fa";
 import CustomCard from "../ui/CustomCard";
@@ -21,10 +21,23 @@ interface MainContentProps {
   };
 }
 
+const debounce = (func: Function, delay: number) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => func(...args), delay);
+  };
+};
+
 const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const [searchTerm, setSearchTerm] = useState(filterOptions.searchTerm);
   const [isFocused, setIsFocused] = useState(false);
   const [filters, setFilters] = useState(filterOptions);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(
+    filterOptions.searchTerm
+  );
+
+
   const {
     data: products = [],
     isError,
@@ -32,16 +45,30 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
     refetch,
   } = useGetProductsQuery(filters);
 
+  // Debounced refetch function
+  const debouncedRefetch = useCallback(
+    debounce(() => refetch(), 200), // Adjust the delay as needed
+    [refetch]
+  );
+
   useEffect(() => {
     setFilters(filterOptions);
     setSearchTerm(filterOptions.searchTerm);
   }, [filterOptions]);
 
+  useEffect(() => {
+    setDebouncedSearchTerm(searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (debouncedSearchTerm !== filters.searchTerm) {
+      setFilters({ ...filters, searchTerm: debouncedSearchTerm });
+      debouncedRefetch();
+    }
+  }, [debouncedSearchTerm, filters, debouncedRefetch]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newSearchTerm = e.target.value;
-    setSearchTerm(newSearchTerm);
-    setFilters({ ...filters, searchTerm: newSearchTerm });
-    refetch();
+    setSearchTerm(e.target.value);
   };
 
   const handleFocus = () => {
@@ -51,6 +78,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const handleBlur = () => {
     setIsFocused(false);
   };
+  console.log(products?.data);
 
   return (
     <div className="lg:max-w-[75%] w-full px-4 xl:px-0">
