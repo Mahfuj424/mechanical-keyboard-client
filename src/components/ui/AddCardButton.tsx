@@ -18,8 +18,8 @@ const AddCardButton = ({ name, product, quantity }: TButtonProps) => {
   // const [available, setAvailable]= useState('')
 
   const handleAddToCart = () => {
-    if (product?.quantity === quantity) {
-      toast.error("Quantity not available");
+    if (product?.quantity === 0) {
+      toast.error("Product not available");
     } else {
       dispatch(addToCart(product));
       toast.success(

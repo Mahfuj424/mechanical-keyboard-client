@@ -31,17 +31,17 @@ const FeaturedProduct = () => {
       />
 
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mx-auto mt-8">
           {firstFourProducts?.map((product: any) => (
             <CustomCard key={product?._id} product={product} />
           ))}
-          <div className="col-span-4 flex justify-center gap-8">
-            {lastTwoProducts?.map((product: any) => (
-              <div className="w-1/2 md:w-1/3 lg:w-1/4" key={product?._id}>
-                <CustomCard product={product} />
-              </div>
-            ))}
-          </div>
+        </div>
+        <div className="md:col-span-4 md:flex justify-center gap-8 mt-8">
+          {lastTwoProducts?.map((product: any) => (
+            <div className="w-full md:w-1/3 lg:w-1/4" key={product?._id}>
+              <CustomCard product={product} />
+            </div>
+          ))}
         </div>
         <div className="flex justify-center mt-5">
           <Link to="/product">

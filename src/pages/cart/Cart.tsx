@@ -3,7 +3,7 @@ import CartItem from "./CartItem";
 
 const Cart = ({ items, onRemove, onIncrease, onDecrease }) => {
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto overflow-x-auto">
       <table className="min-w-full bg-white border-gray-200">
         <thead className="border-y-2">
           <tr>

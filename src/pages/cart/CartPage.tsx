@@ -41,7 +41,7 @@ const CartPage = () => {
   return (
     <div>
       <SecondNavbar prevNav="product" currNav="Shopping Cart" />
-      <div className="px-4 xl:px-0 py-10 overflow-x-auto">
+      <div className="px-4 xl:px-0 py-10 ">
         <div>
           <Cart
             items={items}

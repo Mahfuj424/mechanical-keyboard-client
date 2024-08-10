@@ -61,7 +61,7 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
       <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <AddCardButton name={"Add To Cart"} product={product}/>
+        <AddCardButton name={"Add To Cart"} product={product} quantity={0}/>
       </div>
     </div>
   );

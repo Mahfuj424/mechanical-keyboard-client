@@ -113,7 +113,7 @@ const Navbar = () => {
           >
             <BsCart3 />
             {cartCount > 0 && (
-              <span className="absolute -top-2 right-3  inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              <span className="absolute -top-3 -right-3  inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
                 {cartCount}
               </span>
             )}
@@ -139,12 +139,12 @@ const Navbar = () => {
               to="/cart"
               className={`${
                 location.pathname === "/cart" ? "text-red-500" : "text-black"
-              } text-xl flex items-center gap-2 relative`}
+              } text-xl flex items-center gap-2 relative mr-9`}
             >
               <BsCart3 />
               cart
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                <span className="absolute -top-2 right-7 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
                   {cartCount}
                 </span>
               )}

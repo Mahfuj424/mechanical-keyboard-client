@@ -35,7 +35,7 @@ const ProductDataRow = ({ product }) => {
               <img
                 alt="profile"
                 src={product?.image}
-                className="mx-auto object-cover rounded h-10 w-16 "
+                className="mx-auto object-cover rounded h-10 w-16 hidden md:block"
               />
             </div>
           </div>
