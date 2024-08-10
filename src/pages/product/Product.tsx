@@ -1,6 +1,6 @@
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import SideBar from "@/components/productPageContent/SideBar";
 import MainContent from "@/components/productPageContent/MainContent";
@@ -20,6 +20,24 @@ const Product = () => {
       ...newFilters,
     }));
   };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      const warningMessage =
+        "Your cart data may be lost if you reload the page. Are you sure you want to leave?";
+      event.preventDefault();
+      event.returnValue = warningMessage; // For most browsers
+      return warningMessage; // For some browsers
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
 
   return (
     <div className="mb-20">

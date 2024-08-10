@@ -1,16 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { SlMenu } from "react-icons/sl";
 import { BsCart3 } from "react-icons/bs";
-import { useCart } from "@/CartContext";
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../../../redux/features/cartSlice';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const location = useLocation();
-  const { cartCount } = useCart();
 
   // Define the routes that should have a white background initially
   const whiteBgRoutes = ["/product", "/about", "/contact", "/dashboard"];
@@ -62,6 +61,10 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
 
+  // Get cart items from the Redux store
+  const cartItems = useSelector(selectCartItems);
+  const cartCount = cartItems.length;
+
   const navItems = [
     { title: "Home", url: "/" },
     { title: "Product", url: "/product" },
@@ -103,12 +106,19 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link
-          to={"/cart"}
-          className="text-xl hover:text-red-500 transition-all duration-300 lg:block hidden text-white"
-        >
-          <BsCart3 />
-        </Link>
+        <div className="relative">
+          <Link
+            to={"/cart"}
+            className="text-xl hover:text-red-500 transition-all duration-300 lg:block hidden text-white"
+          >
+            <BsCart3 />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 right-3  inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+        </div>
 
         {/* Mobile screen */}
         <div className="lg:hidden flex items-center">
