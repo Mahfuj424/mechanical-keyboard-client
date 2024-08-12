@@ -60,7 +60,7 @@ export const baseApi = createApi({
     }),
     addProduct: builder.mutation({
       query: (options) => {
-        console.log("base api =>", options);
+        console.log("base api =>", options);  
         return {
           url: `/product`,
           method: "POST",

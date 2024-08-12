@@ -8,11 +8,13 @@ import Home from "@/pages/home/Home";
 import Product from "@/pages/product/Product";
 import SingleProduct from "@/pages/singleProduct/SingleProduct";
 import { createBrowserRouter } from "react-router-dom";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -43,9 +45,9 @@ export const router = createBrowserRouter([
         element: <SingleProduct />,
       },
       {
-        path:'/checkOut',
-        element:<CheckOut/>
-      }
+        path: "/checkOut",
+        element: <CheckOut />,
+      },
     ],
   },
 ]);

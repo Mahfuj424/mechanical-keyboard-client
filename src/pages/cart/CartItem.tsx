@@ -3,6 +3,7 @@ import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 
 type CartItemProps = {
   item: {
@@ -29,7 +30,22 @@ const CartItem = ({
   const product = data?.data?.find((product) => product._id === item._id);
 
   // Define the maximum quantity based on the fetched product details
-  const maxQuantity = product?.quantity || Infinity; // Use Infinity if maxQuantity is not available
+  const maxQuantity = product?.quantity || 0; // Set maxQuantity to 0 if not available
+
+  // Automatically remove the product from the cart if maxQuantity is 0
+  useEffect(() => {
+    if (item?.quantity > maxQuantity) {
+      onRemove(item?._id);
+      if (maxQuantity === 0) {
+        toast.error(
+          "Product removed from cart because it is no longer available",
+          { duration: 3000 }
+        );
+      }
+    }
+  }, [maxQuantity]);
+  console.log('item quantity => ', item?.quantity);
+  console.log('max quantity => ', maxQuantity);
 
   return (
     <tr className="border-b">
@@ -82,7 +98,7 @@ const CartItem = ({
               if (item?.quantity < maxQuantity) {
                 onIncrease(item?._id); // Only increase if quantity is less than maxQuantity
               } else {
-                toast.error("same product no more"); // Show toast if max quantity is reached
+                toast.error("You cannot add more of this product.",); // Show toast if max quantity is reached
               }
             }}
           >

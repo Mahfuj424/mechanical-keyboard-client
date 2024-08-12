@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import CustomCard from "../ui/CustomCard";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import EmptyState from "../ui/shared/emptyState/EmptyState";
@@ -21,33 +21,32 @@ interface MainContentProps {
   };
 }
 
-const debounce = (func: Function, delay: number) => {
-  let timer: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), delay);
-  };
-};
-
 const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   const [searchTerm, setSearchTerm] = useState(filterOptions.searchTerm);
   const [isFocused, setIsFocused] = useState(false);
-  const [filters, setFilters] = useState(filterOptions);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(6); // Products per page
 
   const {
     data: products = [],
     isError,
     isLoading,
-    refetch,
-  } = useGetProductsQuery(filters);
+  } = useGetProductsQuery({
+    ...filterOptions,
+  });
 
-  const handleSearch = useCallback(
-    debounce(() => {
-      setFilters({ ...filters, searchTerm });
-      refetch();
-    }, 200),
-    [searchTerm, filters, refetch]
-  );
+  useEffect(() => {
+    setFilteredProducts(products?.data); // Set the products once fetched
+  }, [products]);
+
+  const handleSearch = useCallback(() => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to first page after search
+  }, [products, searchTerm]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -65,6 +64,23 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
 
   const handleBlur = () => {
     setIsFocused(false);
+  };
+
+  // Pagination logic
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  console.log(filteredProducts);
+  const currentProducts = filteredProducts?.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(filteredProducts?.length / productsPerPage);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
   };
 
   return (
@@ -109,10 +125,44 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
               address={"/"}
             />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-8">
-              {products?.data?.map((product: Product) => (
-                <CustomCard key={product.id} product={product} />
-              ))}
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-8">
+                {currentProducts?.map((product: Product) => (
+                  <CustomCard key={product.id} product={product} />
+                ))}
+              </div>
+              {/* Pagination Controls */}
+              <div className="flex justify-center items-center mt-8">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="p-2 bg-red-500 text-white rounded-l-md"
+                >
+                  <FaArrowLeft />
+                </button>
+                <span className="mx-4 flex items-center">
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                      key={index + 1}
+                      onClick={() => handlePageChange(index + 1)}
+                      className={`px-3 py-1 mx-1 rounded-md ${
+                        currentPage === index + 1
+                          ? "bg-red-500 text-white"
+                          : "bg-gray-300"
+                      }`}
+                    >
+                      {index + 1}
+                    </button>
+                  ))}
+                </span>
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="p-2 bg-red-500 text-white rounded-r-md"
+                >
+                  <FaArrowRight />
+                </button>
+              </div>
             </div>
           )}
         </div>

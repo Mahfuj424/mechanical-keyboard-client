@@ -1,6 +1,16 @@
 import { TbFidgetSpinner } from "react-icons/tb";
-// import { categories } from "../Categories/categoriesData";
+
 const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
+  // Handle change for number fields
+  const handleNumberInputChange = (event, field) => {
+    const value = event.target.value;
+    // Allow empty string to clear the field, otherwise convert to number
+    setRoomData({
+      ...roomData,
+      [field]: value === "" ? "" : Number(value),
+    });
+  };
+
   return (
     <div className="w-full min-h-[calc(100vh-90px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
       <form onSubmit={handleSubmit}>
@@ -14,9 +24,9 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
                 name
               </label>
               <input
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
                 name="location"
-                value={roomData?.name}
+                value={roomData?.name || ""}
                 onChange={(event) =>
                   setRoomData({ ...roomData, name: event.target.value })
                 }
@@ -32,11 +42,11 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
                 image url
               </label>
               <input
-                value={roomData?.image}
+                value={roomData?.image || ""}
                 onChange={(event) =>
                   setRoomData({ ...roomData, image: event.target.value })
                 }
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
                 name="title"
                 id="title"
                 type="text"
@@ -52,14 +62,12 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
                 Price
               </label>
               <input
-                value={roomData?.price}
-                onChange={(event) =>
-                  setRoomData({ ...roomData, price: Number(event.target.value) })
-                }
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                value={roomData?.price || ""}
+                onChange={(event) => handleNumberInputChange(event, "price")}
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
                 name="price"
                 id="price"
-                type="number"
+                type="text"
                 placeholder="Price"
                 required
               />
@@ -70,14 +78,12 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
                 Quantity
               </label>
               <input
-                value={roomData?.quantity}
-                onChange={(event) =>
-                  setRoomData({ ...roomData, quantity: Number(event.target.value) })
-                }
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
+                value={roomData?.quantity || ""}
+                onChange={(event) => handleNumberInputChange(event, "quantity")}
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
                 name="total_guest"
                 id="guest"
-                type="number"
+                type="text"
                 placeholder="Total guest"
                 required
               />
@@ -86,37 +92,35 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
 
           <div className="flex justify-between gap-2">
             <div className="space-y-1 text-sm">
-              <label htmlFor="title" className="block text-gray-600 uppercase">
+              <label htmlFor="rating" className="block text-gray-600 uppercase">
                 Rating
               </label>
               <input
-                value={roomData?.rating}
-                onChange={(event) =>
-                  setRoomData({ ...roomData, rating: Number(event.target.value) })
-                }
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-                name="title"
-                id="title"
-                type="number"
-                placeholder="Title"
+                value={roomData?.rating || ""}
+                onChange={(event) => handleNumberInputChange(event, "rating")}
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
+                name="rating"
+                id="rating"
+                type="text"
+                placeholder="Rating"
                 required
               />
             </div>
 
             <div className="space-y-1 text-sm">
-              <label htmlFor="title" className="block text-gray-600 uppercase">
+              <label htmlFor="brand" className="block text-gray-600 uppercase">
                 Brand
               </label>
               <input
-                value={roomData?.brand}
+                value={roomData?.brand || ""}
                 onChange={(event) =>
                   setRoomData({ ...roomData, brand: event.target.value })
                 }
-                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md "
-                name="title"
-                id="title"
+                className="w-full px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500 rounded-md"
+                name="brand"
+                id="brand"
                 type="text"
-                placeholder="Title"
+                placeholder="Brand"
                 required
               />
             </div>
@@ -126,14 +130,13 @@ const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
             <label htmlFor="description" className="block text-gray-600">
               Description
             </label>
-
             <textarea
-              value={roomData?.description}
+              value={roomData?.description || ""}
               onChange={(event) =>
                 setRoomData({ ...roomData, description: event.target.value })
               }
               id="description"
-              className="block rounded-md focus:rose-300 w-full h-32 px-4 py-3 text-gray-800  border border-rose-300 focus:outline-rose-500 "
+              className="block rounded-md focus:rose-300 w-full h-32 px-4 py-3 text-gray-800 border border-rose-300 focus:outline-rose-500"
               name="description"
             ></textarea>
           </div>

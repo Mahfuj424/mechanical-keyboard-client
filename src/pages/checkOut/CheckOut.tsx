@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCartItems } from "@/redux/features/cartSlice";// আপনার তৈরি করা হুক
+import { selectCartItems } from "@/redux/features/cartSlice"; // আপনার তৈরি করা হুক
 import { useDecreaseProductQuantityMutation } from "@/redux/api/baseApi";
 
 const CheckOut = () => {
@@ -49,6 +49,22 @@ const CheckOut = () => {
       toast.error("Failed to place order");
     }
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      const warningMessage =
+        "Your cart data may be lost if you reload the page. Are you sure you want to leave?";
+      event.preventDefault();
+      event.returnValue = warningMessage; // For most browsers
+      return warningMessage; // For some browsers
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <div>
@@ -129,7 +145,7 @@ const CheckOut = () => {
                   onChange={() => handlePaymentMethodChange("online")}
                   className="mr-2"
                 />
-                Online
+                Stripe
               </label>
             </div>
           </div>

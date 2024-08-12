@@ -47,7 +47,7 @@ const Footer = () => {
               <FaEnvelope className="inline" /> info@site.com
             </p>
             <p className="mb-2">
-              <FaPhone className="inline" /> +457 789 789 65
+              <FaPhone className="inline" /> +017 88 372 355
             </p>
             <div className="flex space-x-4 mt-4">
               <a href="https://web.facebook.com/" target="_blank">
@@ -71,7 +71,7 @@ const Footer = () => {
             <h2 className="text-xl font-bold mb-4">Useful Links</h2>
             <ul>
               <li>
-                <a href="#" className="hover:underline">
+                <a href="/about" className="hover:underline">
                   About Us
                 </a>
               </li>
@@ -91,7 +91,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:underline">
+                <a href="/contact" className="hover:underline">
                   Contact
                 </a>
               </li>
