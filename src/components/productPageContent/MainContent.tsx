@@ -37,14 +37,24 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   });
 
   useEffect(() => {
-    setFilteredProducts(products?.data); // Set the products once fetched
+    // Ensure products are available and have a valid structure
+    if (products?.data && Array.isArray(products.data)) {
+      setFilteredProducts(products.data);
+    }
   }, [products]);
 
   const handleSearch = useCallback(() => {
-    const filtered = products.filter((product) =>
+    if (!searchTerm.trim()) {
+      setFilteredProducts(products?.data); // Reset to all products if search is empty
+      setCurrentPage(1);
+      return;
+    }
+
+    const filtered = products?.data?.filter((product: Product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredProducts(filtered);
+
+    setFilteredProducts(filtered || []);
     setCurrentPage(1); // Reset to first page after search
   }, [products, searchTerm]);
 
@@ -69,7 +79,6 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
   // Pagination logic
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  console.log(filteredProducts);
   const currentProducts = filteredProducts?.slice(
     indexOfFirstProduct,
     indexOfLastProduct

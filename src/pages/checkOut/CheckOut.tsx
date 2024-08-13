@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCartItems } from "@/redux/features/cartSlice"; // আপনার তৈরি করা হুক
+import { selectCartItems } from "@/redux/features/cartSlice";
 import { useDecreaseProductQuantityMutation } from "@/redux/api/baseApi";
+import StripeModal from "@/components/ui/StripeModal";
 
 const CheckOut = () => {
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
+  const [isStripeModalOpen, setIsStripeModalOpen] = useState(false); // State for controlling the modal
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
-  const [decreaseProductQuantity] = useDecreaseProductQuantityMutation(); // নতুন হুক
+  const [decreaseProductQuantity] = useDecreaseProductQuantityMutation();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +29,12 @@ const CheckOut = () => {
   };
 
   const handlePaymentMethodChange = (method: string) => {
-    setPaymentMethod(method);
+    if (method === "online") {
+      setIsStripeModalOpen(true); // Open the Stripe modal when Stripe is selected
+      setPaymentMethod(null); // Prevent the "Place Order" button from showing
+    } else {
+      setPaymentMethod(method); // Set the payment method to "cash" for displaying the "Place Order" button
+    }
   };
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
@@ -35,7 +42,6 @@ const CheckOut = () => {
     const delivery = { ...formData, paymentMethod };
 
     try {
-      // পণ্যগুলোর পরিমাণ কমানোর জন্য ব্যাকএন্ডে রিকোয়েস্ট পাঠান
       for (const item of cartItems) {
         for (let i = 0; i < item.quantity; i++) {
           await decreaseProductQuantity(item._id);
@@ -50,13 +56,33 @@ const CheckOut = () => {
     }
   };
 
+  // Function to handle payment success from Stripe
+  const handleStripePaymentSuccess = async () => {
+    try {
+      // Decrease product quantities
+      for (const item of cartItems) {
+        for (let i = 0; i < item.quantity; i++) {
+          await decreaseProductQuantity(item._id);
+        }
+      }
+
+      toast.success("Payment Successful");
+      navigate("/product");
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      toast.error("Failed to process payment");
+    } finally {
+      setIsStripeModalOpen(false);
+    }
+  };
+
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       const warningMessage =
         "Your cart data may be lost if you reload the page. Are you sure you want to leave?";
       event.preventDefault();
-      event.returnValue = warningMessage; // For most browsers
-      return warningMessage; // For some browsers
+      event.returnValue = warningMessage;
+      return warningMessage;
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -69,7 +95,7 @@ const CheckOut = () => {
   return (
     <div>
       <SecondNavbar prevNav="cart" currNav="CheckOut" />
-      <div className="max-w-md mx-auto p-4">
+      <div className="max-w-md mx-auto p-4 z-0">
         <h2 className="text-2xl font-semibold mb-4 text-red-500">Checkout</h2>
         <form onSubmit={handlePlaceOrder} className="space-y-4">
           <div>
@@ -145,12 +171,12 @@ const CheckOut = () => {
                   onChange={() => handlePaymentMethodChange("online")}
                   className="mr-2"
                 />
-                Stripe
+                Pay Stripe
               </label>
             </div>
           </div>
 
-          {paymentMethod && (
+          {paymentMethod === "cash" && (
             <button
               type="submit"
               className="w-full bg-red-500 text-white p-2 rounded-md mt-4"
@@ -160,6 +186,13 @@ const CheckOut = () => {
           )}
         </form>
       </div>
+
+      {/* Stripe Modal */}
+      <StripeModal
+        isOpen={isStripeModalOpen}
+        onClose={() => setIsStripeModalOpen(false)}
+        onPaymentSuccess={handleStripePaymentSuccess}
+      />
     </div>
   );
 };
