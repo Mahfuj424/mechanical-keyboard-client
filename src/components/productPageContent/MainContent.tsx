@@ -42,6 +42,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
       setFilteredProducts(products.data);
     }
   }, [products]);
+  console.log(products);
 
   const handleSearch = useCallback(() => {
     if (!searchTerm.trim()) {

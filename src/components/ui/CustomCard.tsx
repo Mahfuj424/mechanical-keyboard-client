@@ -1,6 +1,6 @@
-import { IoEyeOutline } from "react-icons/io5";
 import Rating from "react-rating-stars-component";
 import AddCardButton from "./AddCardButton";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export type TProduct = {
@@ -20,36 +20,29 @@ interface ProductCardProps {
 
 const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <div className="relative border rounded-md p-4 shadow-md group overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0, y: 50, scale: 0.8 }} // Start with smaller scale and below
+      whileInView={{ opacity: 1, y: 0, scale: 1 }} // End with normal scale and position
+      transition={{ duration: 1.5 }}
+      className="relative border rounded-md p-4 shadow-md group overflow-hidden"
+    >
       <div className="relative overflow-hidden h-[300px]">
-        {/* Set a fixed height */}
         <img
           src={product?.image}
           alt={product?.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:blur-sm"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <Link
-          to={`/card-details/${product?._id}`}
-          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <IoEyeOutline className="text-red-500 bg-white rounded-full font-bold cursor-pointer text-3xl" />
-        </Link>
       </div>
-      <div className=" transition-all duration-300">
-        <h2 className="text-lg text-center font-semibold mt-4">
-          {product?.name}
-        </h2>
-        <div className="flex items-center justify-center mt-2">
-          <span className="text-red-500 text-xl font-bold">
-            ${product?.price}
-          </span>
-          <span className="text-gray-500 text-lg line-through ml-2">200</span>
+      <div className="transition-all duration-300 mt-4">
+        <h2 className="text-lg font-semibold">{product?.name}</h2>
+        <div className="text-red-500 text-lg">
+          <span className="text-black">Price: </span>${product?.price}
         </div>
-        <div className="text-lg text-center">
-          <span className="text-lg font-semibold">Brand:</span> {product?.brand}
+        <div>
+          <span className="text-lg">Brand:</span> {product?.brand}
         </div>
-        <div className="text-lg text-center">Quantity: {product?.quantity}</div>
-        <div className="flex items-center justify-center mt-2">
+        <div>Quantity: {product?.quantity}</div>
+        <div className="flex items-center z-0">
           <Rating
             count={5}
             value={product?.rating}
@@ -60,10 +53,14 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
           />
         </div>
       </div>
-      <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <AddCardButton name={"Add To Cart"} product={product} quantity={0}/>
-      </div>
-    </div>
+      <Link to={`/card-details/${product?._id}`}>
+        <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <button className="text-white text-lg z-10 bg-red-500 px-6 py-2 rounded-full">
+            See Details
+          </button>
+        </div>
+      </Link>
+    </motion.div>
   );
 };
 

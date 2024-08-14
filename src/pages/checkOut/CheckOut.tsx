@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { ScrollRestoration, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "@/redux/features/cartSlice";
 import { useDecreaseProductQuantityMutation } from "@/redux/api/baseApi";
 import StripeModal from "@/components/ui/StripeModal";
+import { motion } from "framer-motion";
 
 const CheckOut = () => {
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
@@ -28,8 +29,24 @@ const CheckOut = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const isFormFilledOut = () => {
+    return (
+      formData.name &&
+      formData.email &&
+      formData.phoneNumber &&
+      formData.address
+    );
+  };
+
   const handlePaymentMethodChange = (method: string) => {
-    if (method === "online") {
+    if (!isFormFilledOut()) {
+      toast.error(
+        "Please fill out the form before selecting a payment method."
+      );
+      return;
+    }
+
+    if (method === "stripe") {
       setIsStripeModalOpen(true); // Open the Stripe modal when Stripe is selected
       setPaymentMethod(null); // Prevent the "Place Order" button from showing
     } else {
@@ -94,11 +111,16 @@ const CheckOut = () => {
 
   return (
     <div>
+      <ScrollRestoration />
       <SecondNavbar prevNav="cart" currNav="CheckOut" />
       <div className="max-w-md mx-auto p-4 z-0">
         <h2 className="text-2xl font-semibold mb-4 text-red-500">Checkout</h2>
         <form onSubmit={handlePlaceOrder} className="space-y-4">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
+          >
             <label className="block text-gray-700">Name</label>
             <input
               type="text"
@@ -109,8 +131,12 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 120 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
+          >
             <label className="block text-gray-700">Email</label>
             <input
               type="email"
@@ -121,8 +147,12 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 140 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
+          >
             <label className="block text-gray-700">Phone Number</label>
             <input
               type="text"
@@ -133,8 +163,12 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 160 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
+          >
             <label className="block text-gray-700">Address</label>
             <textarea
               name="address"
@@ -144,7 +178,7 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             ></textarea>
-          </div>
+          </motion.div>
 
           <h3 className="text-lg font-semibold mb-2">
             Choose Your Payment Method
@@ -167,8 +201,8 @@ const CheckOut = () => {
                 <input
                   type="radio"
                   name="paymentMethod"
-                  value="online"
-                  onChange={() => handlePaymentMethodChange("online")}
+                  value="stripe"
+                  onChange={() => handlePaymentMethodChange("stripe")}
                   className="mr-2"
                 />
                 Pay Stripe

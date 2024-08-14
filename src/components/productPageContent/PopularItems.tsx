@@ -29,7 +29,7 @@ const PopularItems = () => {
               className="w-16 h-16 object-cover mr-4"
             />
             <div>
-            <Link to={`/card-details/${product?._id}`}><h4 className="hover:underline font-semibold">{product.name}</h4></Link>
+            <Link to={`/card-details/${product?._id}`}><h4 className="hover:text-red-500 font-semibold">{product.name}</h4></Link>
               <div className="flex items-center">
                 <span className="text-red-500 font-bold text-lg mr-2">
                   ${product.price.toFixed(2)}

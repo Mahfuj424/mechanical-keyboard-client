@@ -1,6 +1,7 @@
 // import groupStudy from './images.jpg'
 import "./styles.css";
 import AddCardButton from "@/components/ui/AddCardButton";
+import { motion } from "framer-motion";
 
 const ExtraStudy = () => {
   return (
@@ -10,7 +11,12 @@ const ExtraStudy = () => {
           <div className="md:flex gap-10 mt-8 max-w-4xl mx-auto ">
             {/* <img className='w-[400px]' src={groupStudy} alt="" /> */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="ps-3" data-aos="fade-up" data-aos-duration="3000">
+              <motion.div
+                initial={{ opacity: 0, y: 120 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 2 }}
+                className="ps-3"
+              >
                 <p className="lg:text-6xl md:text-4xl text-3xl text-white font-semibold md:font-bold">
                   Choose Your Keyboard
                 </p>
@@ -22,8 +28,7 @@ const ExtraStudy = () => {
                 <div className="mt-8">
                   <AddCardButton name={"Shop Now"} />
                 </div>
-              </div>
-              
+              </motion.div>
             </div>
           </div>
         </div>

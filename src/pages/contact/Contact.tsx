@@ -2,6 +2,8 @@ import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import { selectCartItems } from "@/redux/features/cartSlice";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { motion } from 'framer-motion';
+import { ScrollRestoration } from "react-router-dom";
 
 const ContactForm = () => {
   const cartItems = useSelector(selectCartItems);
@@ -27,6 +29,7 @@ const ContactForm = () => {
 
   return (
     <div>
+      <ScrollRestoration />
       <SecondNavbar currNav="Contact us" prevNav="home" />
       <div
         className="min-h-screen bg-cover bg-no-repeat flex items-center"
@@ -35,7 +38,12 @@ const ContactForm = () => {
         }}
       >
         <div className="container lg:max-w-7xl mx-auto px-4 xl:px-0 mt-5">
-          <div className="bg-white bg-opacity-80 p-8 rounded-xl shadow-lg max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, x: -100, scale: 0.8 }} // Start with smaller scale and below
+            whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position
+            transition={{ duration: 1 }}
+            className="bg-white bg-opacity-80 p-8 rounded-xl shadow-lg max-w-2xl"
+          >
             <h2 className="text-2xl font-bold mb-6 text-red-500">Contact Us</h2>
             <p className="text-lg mb-6">
               Make an Online Appointment Booking For Business Planning.
@@ -73,7 +81,7 @@ const ContactForm = () => {
                 SEND NOW &rarr;
               </button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
       <div className="mt-20 mb-5">

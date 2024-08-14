@@ -41,7 +41,7 @@ const ProductDataRow = ({ product }) => {
           </div>
           <div className="ml-3">
             <Link to={`/card-details/${product?._id}`}>
-              <p className="text-gray-900 hover:underline font-semibold whitespace-no-wrap">
+              <p className="text-gray-900 hover:text-red-500 font-semibold whitespace-no-wrap">
                 {product?.name}
               </p>
             </Link>

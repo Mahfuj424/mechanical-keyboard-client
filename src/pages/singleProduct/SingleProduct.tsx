@@ -6,6 +6,7 @@ import { ScrollRestoration, useParams } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "@/redux/features/cartSlice";
+import { motion } from "framer-motion";
 
 type TProductProps = {
   name: string;
@@ -27,9 +28,9 @@ type TProductProps = {
 const SingleProduct = () => {
   const { id } = useParams<{ id: string }>();
   const { data: product } = useGetProductByIdQuery(id);
-  const cartItems = useSelector(selectCartItems)
+  const cartItems = useSelector(selectCartItems);
   console.log("cart items =>", cartItems);
-  const cartCount = cartItems.length
+  const cartCount = cartItems.length;
 
   useEffect(() => {
     if (cartCount > 0) {
@@ -113,14 +114,24 @@ const SingleProduct = () => {
       <SecondNavbar prevNav="product" currNav="Details" />
       <div className="lg:max-w-5xl mx-auto mt-10 lg:mt-0">
         <div className="md:flex px-4 xl:px-0 lg:gap-10">
-          <div className="md:shrink-0 flex items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -100, scale: 0.8 }} // Start with smaller scale and below
+            whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position
+            transition={{ duration: 2 }}
+            className="md:shrink-0 flex items-center"
+          >
             <img
-              className="h-48 w-full object-cover rounded-md transition-transform duration-500 hover:scale-105 md:h-3/4 md:w-[400px]"
+              className="h-48 w-full object-cover rounded-md transition-transform duration-500 md:h-3/4 md:w-[400px]"
               src={product?.data?.image}
               alt={product?.data?.name}
             />
-          </div>
-          <div className="p-8">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 100, scale: 0.8 }} // Start with smaller scale and below
+            whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position
+            transition={{ duration: 2 }}
+            className="p-8"
+          >
             <div className="tracking-wide text-lg font-semibold">
               {product?.data?.name}
             </div>
@@ -139,7 +150,7 @@ const SingleProduct = () => {
               <div>Category: Mechanical</div>
             </div>
             <div className="my-5">
-              <AddCardButton name={"Add To Cart"} product={product?.data}/>
+              <AddCardButton name={"Add To Cart"} product={product?.data} />
             </div>
             <div className="mt-4 text-gray-500">
               <div className="flex items-center">
@@ -155,7 +166,7 @@ const SingleProduct = () => {
                 <span>Cash on Delivery available</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

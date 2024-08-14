@@ -6,6 +6,7 @@ import "./styles.css";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import ReactStars from "react-rating-stars-component";
+import { motion } from "framer-motion";
 
 const Testimonial = () => {
   const testimonials = [
@@ -91,7 +92,7 @@ const Testimonial = () => {
           },
           "@0.75": {
             slidesPerView: 1,
-            spaceBetween:20,
+            spaceBetween: 20,
           },
           "@1.00": {
             slidesPerView: 2,
@@ -108,10 +109,10 @@ const Testimonial = () => {
         <div className="p-4 md:p-0">
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
-              <div
-                data-aos="fade-up"
-                data-aos-easing="linear"
-                data-aos-duration="1500"
+              <motion.div
+                initial={{ opacity: 0, y: 130 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 2 }}
                 className="testimonial-item hover:shadow-2xl p-5 md:p-10 rounded-lg w-full"
               >
                 <div className="testimonial-content bg-base-200 p-5 rounded-md w-full">
@@ -121,7 +122,9 @@ const Testimonial = () => {
                         <span className="quote-icon">
                           <FaQuoteLeft className="text-red-500" />
                         </span>
-                        <p className="testimonial-text w-full">{testimonial.review}</p>
+                        <p className="testimonial-text w-full">
+                          {testimonial.review}
+                        </p>
                         <span className="quote-icon1">
                           <FaQuoteRight className="text-red-500" />
                         </span>
@@ -146,7 +149,7 @@ const Testimonial = () => {
                     edit={false}
                   />
                 </div>
-              </div>
+              </motion.div>
             </SwiperSlide>
           ))}
         </div>

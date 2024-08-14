@@ -1,9 +1,11 @@
 import React from "react";
 import CartItem from "./CartItem";
+import { ScrollRestoration } from "react-router-dom";
 
 const Cart = ({ items, onRemove, onIncrease, onDecrease }) => {
   return (
     <div className="max-w-7xl mx-auto overflow-x-auto">
+      <ScrollRestoration />
       <table className="min-w-full bg-white border-gray-200">
         <thead className="border-y-2">
           <tr>

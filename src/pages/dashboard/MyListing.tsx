@@ -5,6 +5,7 @@ import ProductDataRow from "./ProductDataRow";
 import AddProductData from "../../modal/AddProductData";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { motion } from 'framer-motion';
 
 const MyListings = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,7 +57,12 @@ const MyListings = () => {
             <div className="w-full max-w-7xl px-4 xl:px-0 mx-auto">
               <div className="py-8">
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                  <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                  <motion.div
+                    initial={{ opacity: 0, x: 100, scale: 0.8 }} // Start with smaller scale and below
+                    whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position
+                    transition={{ duration: 2 }}
+                    className="inline-block min-w-full shadow rounded-lg overflow-hidden"
+                  >
                     <table className="min-w-full leading-normal">
                       <thead>
                         <tr>
@@ -98,40 +104,39 @@ const MyListings = () => {
                         ))}
                       </tbody>
                     </table>
-                    
-                  </div>
+                  </motion.div>
                   {/* Pagination Controls */}
                   <div className="flex justify-center items-center mt-8">
-                      <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="p-2 bg-red-500 text-white rounded-l-md"
-                      >
-                        <FaArrowLeft />
-                      </button>
-                      <span className="mx-4 flex items-center">
-                        {Array.from({ length: totalPages }, (_, index) => (
-                          <button
-                            key={index + 1}
-                            onClick={() => handlePageChange(index + 1)}
-                            className={`px-3 py-1 mx-1 rounded-md ${
-                              currentPage === index + 1
-                                ? "bg-red-500 text-white"
-                                : "bg-gray-300"
-                            }`}
-                          >
-                            {index + 1}
-                          </button>
-                        ))}
-                      </span>
-                      <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                        className="p-2 bg-red-500 text-white rounded-r-md"
-                      >
-                        <FaArrowRight />
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="p-2 bg-red-500 text-white rounded-l-md"
+                    >
+                      <FaArrowLeft />
+                    </button>
+                    <span className="mx-4 flex items-center">
+                      {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                          key={index + 1}
+                          onClick={() => handlePageChange(index + 1)}
+                          className={`px-3 py-1 mx-1 rounded-md ${
+                            currentPage === index + 1
+                              ? "bg-red-500 text-white"
+                              : "bg-gray-300"
+                          }`}
+                        >
+                          {index + 1}
+                        </button>
+                      ))}
+                    </span>
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="p-2 bg-red-500 text-white rounded-r-md"
+                    >
+                      <FaArrowRight />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
