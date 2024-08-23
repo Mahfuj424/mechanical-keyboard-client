@@ -14,7 +14,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 py-12 text-white">
-      <div className="w-full md:flex justify-between max-w-7xl px-4 xl:px-0 mx-auto py-10">
+      <div className="w-full md:flex justify-between max-w-7xl lg:max-w-6xl px-4 xl:px-0 mx-auto py-10">
         <div>
           <h2 className="text-xl font-bold mb-4">Subscribe Our Newsletter</h2>
           <p className="mb-4">
@@ -31,7 +31,7 @@ const Footer = () => {
           <button className="bg-red-600 p-2 rounded-r-lg">Subscribe</button>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto border-t border-gray-700 px-4 xl:px-0 pt-4">
+      <div className="max-w-7xl lg:max-w-6xl mx-auto border-t border-gray-700 px-4 xl:px-0 pt-4">
         <div className="grid grid-cols-1 md:grid-col-2 lg:grid-cols-4  justify-between">
           <div className="flex items-center justify-start">
             <h1 className="text-6xl font-semibold text-red-500">E-</h1>

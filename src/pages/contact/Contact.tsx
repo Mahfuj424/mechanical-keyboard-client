@@ -37,7 +37,7 @@ const ContactForm = () => {
           backgroundImage: `url(https://solutek-html.netlify.app/assets/images/contact-bg2.png)`,
         }}
       >
-        <div className="container lg:max-w-7xl mx-auto px-4 xl:px-0 mt-5">
+        <div className="container lg:max-w-6xl max-w-7xl mx-auto px-4 xl:px-0 mt-5">
           <motion.div
             initial={{ opacity: 0, x: -100, scale: 0.8 }} // Start with smaller scale and below
             whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position

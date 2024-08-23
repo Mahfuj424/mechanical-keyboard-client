@@ -21,7 +21,7 @@ const PopularItems = () => {
     <div className="p-4 hidden lg:block">
       <h3 className="text-xl font-semibold mb-4">Popular Items</h3>
       <ul>
-        {popularProducts.map((product) => (
+        {popularProducts?.map((product) => (
           <li key={product.id} className="flex items-center mb-4 ">
             <img
               src={product.image}
