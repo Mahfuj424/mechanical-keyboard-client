@@ -33,7 +33,7 @@ const About = () => {
       <ScrollRestoration />
       <SecondNavbar currNav="About-us" prevNav="home" />
       <div className="bg-white py-12">
-        <div className="mx-auto lg:max-w-7xl ">
+        <div className="mx-auto lg:max-w-6xl max-w-7xl ">
           <div className="grid grid-cols-1 lg:grid-cols-2 px-4 xl:px-0 gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: -100, scale: 0.8 }} // Start with smaller scale and below

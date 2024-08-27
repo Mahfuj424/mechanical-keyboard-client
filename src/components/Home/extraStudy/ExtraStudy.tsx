@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const ExtraStudy = () => {
   return (
     <div className=" mt-5">
-      <div className="featured-bg bg-fixed my-20 py-20 text-gray-200 max-w-7xl mx-auto rounded-xl">
+      <div className="featured-bg bg-fixed my-20 py-20 text-gray-200 max-w-7xl lg:max-w-6xl mx-auto rounded-xl">
         <div className=" bg-gray-200 text-black py-28  bg-opacity-20">
           <div className="md:flex gap-10 mt-8 max-w-4xl mx-auto ">
             {/* <img className='w-[400px]' src={groupStudy} alt="" /> */}

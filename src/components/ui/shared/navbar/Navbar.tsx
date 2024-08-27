@@ -79,7 +79,7 @@ const Navbar = () => {
         location?.pathname === "/" ? bgColor : "bg-gray-900"
       }`}
     >
-      <div className="navbar max-w-7xl px-4 xl:px-0 mx-auto flex items-center justify-between py-4">
+      <div className="navbar max-w-7xl lg:max-w-6xl px-4 lg:px-0 mx-auto flex items-center justify-between py-4">
         {/* Logo */}
         <Link to="/" className="flex items-center justify-center">
           <h1 className="text-6xl font-semibold text-red-500">E-</h1>
