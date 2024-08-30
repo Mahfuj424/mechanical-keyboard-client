@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
-import { ScrollRestoration, useNavigate } from "react-router-dom";
+import { ScrollRestoration, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "@/redux/features/cartSlice";
 import { useDecreaseProductQuantityMutation } from "@/redux/api/baseApi";
-import StripeModal from "@/components/ui/StripeModal";
 import { motion } from "framer-motion";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CheckOut = () => {
+  const location = useLocation();
+  const { total, items } = location.state || {};
+
+  console.log("items", items);
+
+  console.log("total", total);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [isStripeModalOpen, setIsStripeModalOpen] = useState(false); // State for controlling the modal
   const navigate = useNavigate();
@@ -74,22 +80,60 @@ const CheckOut = () => {
   };
 
   // Function to handle payment success from Stripe
-  const handleStripePaymentSuccess = async () => {
-    try {
-      // Decrease product quantities
-      for (const item of cartItems) {
-        for (let i = 0; i < item.quantity; i++) {
-          await decreaseProductQuantity(item._id);
-        }
-      }
+  // const handleStripePaymentSuccess = async () => {
+  //   try {
+  //     // Decrease product quantities
+  //     for (const item of cartItems) {
+  //       for (let i = 0; i < item.quantity; i++) {
+  //         await decreaseProductQuantity(item._id);
+  //       }
+  //     }
 
-      toast.success("Payment Successful");
-      navigate("/product");
-    } catch (error) {
-      console.error("Error processing payment:", error);
-      toast.error("Failed to process payment");
-    } finally {
-      setIsStripeModalOpen(false);
+  //     toast.success("Payment Successful");
+  //     navigate("/product");
+  //   } catch (error) {
+  //     console.error("Error processing payment:", error);
+  //     toast.error("Failed to process payment");
+  //   } finally {
+  //     setIsStripeModalOpen(false);
+  //   }
+  // };
+
+  // payment with stripe
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51P7dlcB60XUsFAl173CotM9I3Vu2tm4yIvsiHzlfMGbuqvaNbHenyflOnYqUHmCexpGWapEpebml1SDLW4qdvHEA00211GcA1I"
+    );
+    const body = {
+      products: items,
+    };
+
+    const headers = {
+      "content-type": "application/json",
+    };
+
+    const response = await fetch(
+      "http://localhost:5000/api/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = stripe?.redirectToCheckout({
+      sessionId: session?.id,
+    });
+    for (const item of cartItems) {
+      for (let i = 0; i < item.quantity; i++) {
+        await decreaseProductQuantity(item._id);
+      }
+    }
+
+    if (result?.error) {
+      console.log("stripe error", result?.error);
     }
   };
 
@@ -196,7 +240,7 @@ const CheckOut = () => {
                 Cash on Delivery
               </label>
             </div>
-            <div>
+            <div onClick={makePayment}>
               <label className="flex items-center">
                 <input
                   type="radio"
@@ -220,13 +264,6 @@ const CheckOut = () => {
           )}
         </form>
       </div>
-
-      {/* Stripe Modal */}
-      <StripeModal
-        isOpen={isStripeModalOpen}
-        onClose={() => setIsStripeModalOpen(false)}
-        onPaymentSuccess={handleStripePaymentSuccess}
-      />
     </div>
   );
 };

@@ -9,6 +9,8 @@ import Product from "@/pages/product/Product";
 import SingleProduct from "@/pages/singleProduct/SingleProduct";
 import { createBrowserRouter } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
+import Success from "@/pages/checkOut/Success";
+import Cancel from "@/pages/checkOut/Cancel";
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +49,14 @@ export const router = createBrowserRouter([
       {
         path: "/checkOut",
         element: <CheckOut />,
+      },
+      {
+        path: "/success",
+        element: <Success />,
+      },
+      {
+        path: "/cancel",
+        element: <Cancel />,
       },
     ],
   },

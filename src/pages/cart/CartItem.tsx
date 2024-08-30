@@ -25,9 +25,11 @@ const CartItem = ({
   onDecrease,
 }: CartItemProps) => {
   const { data } = useGetProductsQuery("");
+  
 
   // Find the product details from the fetched data
   const product = data?.data?.find((product) => product._id === item._id);
+  console.log('cart data', item);
 
   // Define the maximum quantity based on the fetched product details
   const maxQuantity = product?.quantity || 0; // Set maxQuantity to 0 if not available

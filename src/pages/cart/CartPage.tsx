@@ -66,7 +66,7 @@ const CartPage = () => {
           />
         </div>
         <div className="lg:max-w-7xl mx-auto flex justify-end">
-          <CartTotals subtotal={calculateTotal()} total={calculateTotal()} />
+          <CartTotals items={items} subtotal={calculateTotal()} total={calculateTotal()} />
         </div>
       </div>
     </div>
