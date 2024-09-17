@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import Dropdown from "./Dropdown";
 import PriceRangeSlider from "./PriceRangeSlider";
@@ -21,7 +22,7 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
   const maxPrice =
     products.length > 0
       ? Math.floor(
-          products.reduce((max, product) => Math.max(max, product.price), 0)
+          products.reduce((max:any, product:any) => Math.max(max, product.price), 0)
         )
       : 200;
 
@@ -69,7 +70,7 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
   console.log(productsData);
 
   return (
-    <div className="lg:max-w-[30%] w-full">
+    <div className="lg:max-w-[25%] w-full">
       <div>
         <Dropdown
           options={dropdownOptions}
@@ -78,7 +79,7 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
         />
       </div>
       <div className="flex items-center mt-5 px-4 xl:px-0 justify-center bg-gray-100">
-        <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
+        <div className="bg-white pe-4 pt-5 w-full ">
           <h1 className="text-2xl mb-4">Price Range Slider</h1>
           <PriceRangeSlider
             min={0}
@@ -97,7 +98,7 @@ const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
         <CustomButton onClick={handleClearFilters} name={"Clear All Filter"} />
       </div>
       <PopularItems />
-      <div className="border-t pt-5 hidden lg:block">
+      <div className="border-t pt-5 hidden lg:block ">
         <div
           className="relative w-[70%] h-96 bg-cover bg-center mx-auto "
           style={{

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
@@ -28,7 +29,7 @@ const CartItem = ({
   
 
   // Find the product details from the fetched data
-  const product = data?.data?.find((product) => product._id === item._id);
+  const product = data?.data?.find((product:any) => product._id === item._id);
   console.log('cart data', item);
 
   // Define the maximum quantity based on the fetched product details

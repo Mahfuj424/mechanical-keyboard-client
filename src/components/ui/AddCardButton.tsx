@@ -1,24 +1,25 @@
 import { addToCart, selectCartItems } from "@/redux/features/cartSlice";
 import { FaCartPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { TProduct } from "./CustomCard";
+import { TProduct } from "./CustomCard"; // Ensure this path is correct
 import toast from "react-hot-toast";
 
 type TButtonProps = {
   name: string;
-  product: TProduct;
-  quantity: number;
+  product?: TProduct; // Product is optional
 };
 
 const AddCardButton = ({ name, product }: TButtonProps) => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItems);
+  const cartItems = useSelector(selectCartItems); // Define cartItems as an array of TProduct
 
-  // Find the product in the cart
+  // Find the product in the cart, ensuring product and cartItem are typed correctly
   const cartItem = cartItems.find((item) => item?._id === product?._id);
 
   const handleAddToCart = () => {
-    if (product?.quantity === 0) {
+    if (!product) return;
+
+    if (product.quantity === 0) {
       toast.error("Product not available");
     } else if (cartItem && cartItem.quantity === product.quantity) {
       // If the product is already in the cart and the quantities match

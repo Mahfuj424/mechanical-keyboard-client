@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChangeEvent } from "react";
 import { TbFidgetSpinner } from "react-icons/tb";
 
-const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }) => {
+const UpdateRoomForm = ({ handleSubmit, loading, roomData, setRoomData }:any) => {
   // Handle change for number fields
-  const handleNumberInputChange = (event, field) => {
+  const handleNumberInputChange = (event: ChangeEvent<HTMLInputElement>, field: string) => {
     const value = event.target.value;
     // Allow empty string to clear the field, otherwise convert to number
     setRoomData({

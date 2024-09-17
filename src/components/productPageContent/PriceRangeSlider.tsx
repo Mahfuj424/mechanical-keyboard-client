@@ -34,7 +34,7 @@ const PriceRangeSlider: React.FC<PriceRangeSliderProps> = ({
   };
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full pe-5">
       <div className="relative my-4  h-10">
         <input
           type="range"

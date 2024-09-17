@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -21,7 +22,7 @@ const PopularItems = () => {
     <div className="p-4 hidden lg:block">
       <h3 className="text-xl font-semibold mb-4">Popular Items</h3>
       <ul>
-        {popularProducts?.map((product) => (
+        {popularProducts?.map((product:any) => (
           <li key={product.id} className="flex items-center mb-4 ">
             <img
               src={product.image}

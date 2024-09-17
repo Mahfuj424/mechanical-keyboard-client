@@ -3,27 +3,12 @@ import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import { useGetProductByIdQuery } from "@/redux/api/baseApi";
 import { FaShieldAlt, FaUndo, FaMoneyBillWave } from "react-icons/fa";
 import { ScrollRestoration, useParams } from "react-router-dom";
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "@/redux/features/cartSlice";
 import { motion } from "framer-motion";
 
-type TProductProps = {
-  name: string;
-  price: number;
-  originalPrice: number;
-  discount: number;
-  rating: number;
-  ratingCount: number;
-  description: string;
-  warranty: string;
-  returnPolicy: string;
-  codAvailable: boolean;
-  sku: string;
-  category: string;
-  tags: string[];
-  images: string[];
-};
+
 
 const SingleProduct = () => {
   const { id } = useParams<{ id: string }>();

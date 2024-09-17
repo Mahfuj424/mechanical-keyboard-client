@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SectionTitle from "@/components/sectinTitle/SectionTitle";
-import AddCardButton from "@/components/ui/AddCardButton";
 import CustomButton from "@/components/ui/CustomButton";
 import CustomCard from "@/components/ui/CustomCard";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { Link } from "react-router-dom";
 
 const FeaturedProduct = () => {
-  const { data: products, isLoading, isError } = useGetProductsQuery({});
+  const { data: products } = useGetProductsQuery({});
 
   // Sort and slice the products once
   const sortedProducts = [...(products?.data || [])]

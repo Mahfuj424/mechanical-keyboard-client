@@ -72,7 +72,7 @@ const ContactForm = () => {
               <textarea
                 placeholder="Message"
                 className="border rounded-xl p-4 w-full md:col-span-2 focus:outline-none focus:border-red-500"
-                rows="4"
+                
               />
               <button
                 type="submit"

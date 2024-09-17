@@ -29,7 +29,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         <button
           type="button"
           onClick={toggleDropdown}
-          className="inline-flex justify-between items-center w-11/12 rounded-md border border-gray-300 shadow-sm px-4 py-3 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          className="inline-flex justify-between items-center w-11/12 rounded-md border border-gray-300 shadow-sm px-4 py-3 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 "
         >
           {selectedOption}
           <FaChevronDown className="ml-2 h-5 w-5" />

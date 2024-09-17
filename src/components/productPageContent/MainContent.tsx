@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback } from "react";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import { FaSearch, FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -51,7 +52,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
       return;
     }
 
-    const filtered = products?.data?.filter((product: Product) =>
+    const filtered = products?.data?.filter((product: any) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -137,7 +138,7 @@ const MainContent: React.FC<MainContentProps> = ({ filterOptions }) => {
           ) : (
             <div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5 mx-auto mt-8">
-                {currentProducts?.map((product: Product) => (
+                {currentProducts?.map((product: any) => (
                   <CustomCard key={product.id} product={product} />
                 ))}
               </div>

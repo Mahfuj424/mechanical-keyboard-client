@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import DeleteProduct from "@/modal/DeleteProduct";
 import UpdateProductData from "@/modal/UpdateProductData";
 import { useDeleteProductMutation } from "@/redux/api/baseApi";
@@ -5,11 +6,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-const ProductDataRow = ({ product }) => {
+const ProductDataRow = ({ product }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [deleteProduct, { isLoading, isSuccess, isError, error }] =
-    useDeleteProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
   const closeModal = () => {
     setIsOpen(false);

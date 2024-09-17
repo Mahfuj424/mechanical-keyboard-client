@@ -1,7 +1,7 @@
-import Rating from "react-rating-stars-component";
-import AddCardButton from "./AddCardButton";
+import { FC } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import ReactStars from "react-rating-stars-component"; // This supports half stars
 
 export type TProduct = {
   _id: string;
@@ -18,7 +18,7 @@ interface ProductCardProps {
   product: TProduct;
 }
 
-const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
+const CustomCard: FC<ProductCardProps> = ({ product }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50, scale: 0.8 }} // Start with smaller scale and below
@@ -26,7 +26,7 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
       transition={{ duration: 1.5 }}
       className="relative border rounded-md p-4 shadow-md group overflow-hidden"
     >
-      <div className="relative overflow-hidden h-[300px]">
+      <div className="relative overflow-hidden h-[230px] bg-gray-200">
         <img
           src={product?.image}
           alt={product?.name}
@@ -42,20 +42,19 @@ const CustomCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className="text-lg">Brand:</span> {product?.brand}
         </div>
         <div>Quantity: {product?.quantity}</div>
-        <div className="flex items-center z-0">
-          <Rating
+        <div className="flex items-center">
+          <ReactStars
             count={5}
             value={product?.rating}
             size={24}
             activeColor="#ffd700"
             edit={false}
-            isHalf={true} // Enable half-stars
           />
         </div>
       </div>
       <Link to={`/card-details/${product?._id}`}>
         <div className="absolute bottom-4 left-0 right-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <button className="text-white text-lg z-10 bg-red-500 px-6 py-2 rounded-full">
+          <button className="text-white text-lg bg-red-500 px-6 py-2 rounded-full">
             See Details
           </button>
         </div>

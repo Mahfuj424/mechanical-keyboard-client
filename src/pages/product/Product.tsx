@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import  { useEffect, useState } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import SideBar from "@/components/productPageContent/SideBar";
 import MainContent from "@/components/productPageContent/MainContent";
@@ -16,7 +17,7 @@ const Product = () => {
     searchTerm: "",
   });
 
-  const handleFilterChange = (newFilters) => {
+  const handleFilterChange = (newFilters:any) => {
     setFilterOptions((prevFilters) => ({
       ...prevFilters,
       ...newFilters,
@@ -48,7 +49,7 @@ const Product = () => {
     <div className="mb-20">
       <ScrollRestoration />
       <SecondNavbar prevNav="home" currNav="product" />
-      <div className="lg:flex w-full max-w-7xl lg:max-w-6xl justify-between mx-auto gap-10 mt-10">
+      <div className="lg:flex w-full max-w-7xl justify-between mx-auto gap-10 mt-10">
         <SideBar onFilterChange={handleFilterChange} />
         <MainContent filterOptions={filterOptions} />
       </div>

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import  { useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import SectionTitle from "@/components/sectinTitle/SectionTitle";
-import { motion } from "framer-motion";
 
 const WhyChoose = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
-  const toggleAccordion = (index) => {
+  const toggleAccordion = (index:any) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -52,10 +52,7 @@ const WhyChoose = () => {
         className="max-w-4xl mx-auto mt-5"
       >
         {faqs.map((faq, index) => (
-          <motion.div
-          initial={{ opacity: 0, y: 150 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration:2 }} key={index} className="mb-4 border-b">
+          <div key={index} className="mb-4 border-b">
             <button
               className="w-full text-left flex justify-between items-center py-4 text-gray-700 font-semibold focus:outline-none"
               onClick={() => toggleAccordion(index)}
@@ -72,7 +69,7 @@ const WhyChoose = () => {
             {openIndex === index && (
               <div className="px-4 pb-4 text-gray-600">{faq.answer}</div>
             )}
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

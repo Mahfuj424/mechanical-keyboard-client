@@ -1,8 +1,9 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import CartItem from "./CartItem";
 import { ScrollRestoration } from "react-router-dom";
 
-const Cart = ({ items, onRemove, onIncrease, onDecrease }) => {
+const Cart = ({ items, onRemove, onIncrease, onDecrease }:any) => {
   return (
     <div className="max-w-7xl mx-auto overflow-x-auto">
       <ScrollRestoration />
@@ -17,7 +18,7 @@ const Cart = ({ items, onRemove, onIncrease, onDecrease }) => {
           </tr>
         </thead>
         <tbody>
-          {items?.map((item) => (
+          {items?.map((item:any) => (
             <CartItem
               key={item?._id}
               item={item}

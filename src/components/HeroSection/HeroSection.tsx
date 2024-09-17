@@ -105,7 +105,7 @@ export function HeroSection() {
                       transition={{ duration: 2 }}
                     >
                       <Link to="/product">
-                        <AddCardButton name={"Shop Now"} product={null} />
+                        <AddCardButton name={"Shop Now"} />
                       </Link>
                     </motion.div>
                   </div>

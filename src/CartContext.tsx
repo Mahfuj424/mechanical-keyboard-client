@@ -1,19 +1,46 @@
-import React, { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
-const CartContext = createContext();
+// Define the shape of a cart item
+interface CartItem {
+  id: string; // Assuming `id` is a string, adjust as necessary
+  name: string;
+  price: number;
+  quantity: number;
+}
 
+// Define the context type
+interface CartContextType {
+  cartItems: CartItem[];
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (itemId: string) => void;
+  cartCount: number;
+}
+
+// Create context with a default value
+const CartContext = createContext<CartContextType | undefined>(undefined);
+
+// Custom hook to use the CartContext
 export const useCart = () => {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
 };
 
-export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+// CartProvider component
+interface CartProviderProps {
+  children: ReactNode;
+}
 
-  const addToCart = (item) => {
+export const CartProvider = ({ children }: CartProviderProps) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const addToCart = (item: CartItem) => {
     setCartItems((prevItems) => [...prevItems, item]);
   };
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = (itemId: string) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 

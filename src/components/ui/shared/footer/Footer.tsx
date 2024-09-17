@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaFacebookF,
   FaTwitter,
@@ -14,7 +13,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="bg-gray-900 py-12 text-white">
-      <div className="w-full md:flex justify-between max-w-7xl lg:max-w-6xl px-4 xl:px-0 mx-auto py-10">
+      <div className="w-full md:flex justify-between max-w-7xl px-4 md:px-0 mx-auto py-10">
         <div>
           <h2 className="text-xl font-bold mb-4">Subscribe Our Newsletter</h2>
           <p className="mb-4">
@@ -136,27 +135,27 @@ const Footer = () => {
           </p>
           <div className="flex space-x-2">
             <img
-              src="https://i.postimg.cc/mDZ6bT8B/visa.png"
+              src="https://i.ibb.co.com/3k64ntQ/visa.png"
               alt="Visa"
               className="w-8 h-auto"
             />
             <img
-              src="https://i.postimg.cc/0jTfJvd6/paypal.png"
+              src="https://i.ibb.co.com/mN6GsfZ/discover.png"
               alt="Discover"
               className="w-8 h-auto"
             />
             <img
-              src="https://i.postimg.cc/bwj77fcN/discover.png"
+              src="https://i.ibb.co.com/7CG7wWW/paypal.png"
               alt="MasterCard"
               className="w-8 h-auto"
             />
             <img
-              src="https://i.postimg.cc/G3ySdgjB/master-card.png"
+              src="https://i.ibb.co.com/1mSgTQ6/amarican-express.png"
               alt="PayPal"
               className="w-8 h-auto"
             />
             <img
-              src="https://i.postimg.cc/D0XNNBxX/amarican-express.png"
+              src="https://i.ibb.co.com/jLNwN7p/master-card.png"
               alt="American Express"
               className="w-8 h-auto"
             />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import toast from "react-hot-toast";
@@ -5,7 +6,6 @@ import { ScrollRestoration, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCartItems } from "@/redux/features/cartSlice";
 import { useDecreaseProductQuantityMutation } from "@/redux/api/baseApi";
-import { motion } from "framer-motion";
 import { loadStripe } from "@stripe/stripe-js";
 
 const CheckOut = () => {
@@ -16,7 +16,7 @@ const CheckOut = () => {
 
   console.log("total", total);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
-  const [isStripeModalOpen, setIsStripeModalOpen] = useState(false); // State for controlling the modal
+  const [, setIsStripeModalOpen] = useState(false); // State for controlling the modal
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const [decreaseProductQuantity] = useDecreaseProductQuantityMutation();
@@ -62,78 +62,79 @@ const CheckOut = () => {
 
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
-    const delivery = { ...formData, paymentMethod };
+
+    if (!isFormFilledOut()) {
+      toast.error("Please fill out the form before placing an order.");
+      return;
+    }
 
     try {
+      // Decrease the quantity of each product in the cart
       for (const item of cartItems) {
-        for (let i = 0; i < item.quantity; i++) {
-          await decreaseProductQuantity(item._id);
-        }
+        await decreaseProductQuantity({
+          id: item._id,
+          quantity: item.quantity,
+        }); // Pass both id and quantity
       }
 
-      toast.success("Order Successful");
-      navigate("/product");
-    } catch (error) {
+      // Process the payment based on the selected method
+      if (paymentMethod === "stripe") {
+        await makePayment(); // Process Stripe payment
+      } else if (paymentMethod === "cash") {
+        toast.success("Order Successful");
+        navigate("/product"); // Redirect to the product page
+      }
+    } catch (error: any) {
       console.error("Error placing order:", error);
-      toast.error("Failed to place order");
+      toast.error("Failed to place order: " + error.message);
     }
   };
 
-  // Function to handle payment success from Stripe
-  // const handleStripePaymentSuccess = async () => {
-  //   try {
-  //     // Decrease product quantities
-  //     for (const item of cartItems) {
-  //       for (let i = 0; i < item.quantity; i++) {
-  //         await decreaseProductQuantity(item._id);
-  //       }
-  //     }
-
-  //     toast.success("Payment Successful");
-  //     navigate("/product");
-  //   } catch (error) {
-  //     console.error("Error processing payment:", error);
-  //     toast.error("Failed to process payment");
-  //   } finally {
-  //     setIsStripeModalOpen(false);
-  //   }
-  // };
-
   // payment with stripe
   const makePayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51P7dlcB60XUsFAl173CotM9I3Vu2tm4yIvsiHzlfMGbuqvaNbHenyflOnYqUHmCexpGWapEpebml1SDLW4qdvHEA00211GcA1I"
-    );
-    const body = {
-      products: items,
-    };
+    try {
+      const stripe = await loadStripe(
+        "pk_test_51P7dlcB60XUsFAl173CotM9I3Vu2tm4yIvsiHzlfMGbuqvaNbHenyflOnYqUHmCexpGWapEpebml1SDLW4qdvHEA00211GcA1I"
+      );
 
-    const headers = {
-      "content-type": "application/json",
-    };
+      const body = { products: items };
+      console.log(body);
+      const headers = { "content-type": "application/json" };
 
-    const response = await fetch(
-      "http://localhost:5000/api/create-checkout-session",
-      {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
+      const response = await fetch(
+        "https://machanical-keyboard-server.vercel.app/api/create-checkout-session",
+        {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(body),
+        }
+      );
+
+      for (const item of cartItems) {
+        await decreaseProductQuantity({
+          id: item._id,
+          quantity: item.quantity,
+        }); // Pass both id and quantity
       }
-    );
 
-    const session = await response.json();
-
-    const result = stripe?.redirectToCheckout({
-      sessionId: session?.id,
-    });
-    for (const item of cartItems) {
-      for (let i = 0; i < item.quantity; i++) {
-        await decreaseProductQuantity(item._id);
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
       }
-    }
 
-    if (result?.error) {
-      console.log("stripe error", result?.error);
+      const session = await response.json();
+      const result = await stripe?.redirectToCheckout({
+        sessionId: session?.id,
+      });
+      console.log(result);
+
+      if (result?.error) {
+        throw new Error(
+          result.error.message || "Failed to redirect to checkout"
+        );
+      }
+    } catch (error: any) {
+      console.error("Stripe payment error:", error);
+      toast.error("Failed to process payment: " + error.message);
     }
   };
 
@@ -160,11 +161,7 @@ const CheckOut = () => {
       <div className="max-w-md mx-auto p-4 z-0">
         <h2 className="text-2xl font-semibold mb-4 text-red-500">Checkout</h2>
         <form onSubmit={handlePlaceOrder} className="space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2 }}
-          >
+          <div>
             <label className="block text-gray-700">Name</label>
             <input
               type="text"
@@ -175,12 +172,8 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 120 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2 }}
-          >
+          </div>
+          <div>
             <label className="block text-gray-700">Email</label>
             <input
               type="email"
@@ -191,12 +184,8 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 140 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2 }}
-          >
+          </div>
+          <div>
             <label className="block text-gray-700">Phone Number</label>
             <input
               type="text"
@@ -207,12 +196,8 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 160 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2 }}
-          >
+          </div>
+          <div>
             <label className="block text-gray-700">Address</label>
             <textarea
               name="address"
@@ -222,7 +207,7 @@ const CheckOut = () => {
               onChange={handleInputChange}
               required
             ></textarea>
-          </motion.div>
+          </div>
 
           <h3 className="text-lg font-semibold mb-2">
             Choose Your Payment Method

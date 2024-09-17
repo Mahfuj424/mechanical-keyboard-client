@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CustomButton from "@/components/ui/CustomButton";
 import { Link } from "react-router-dom";
 
-const CartTotals = ({ subtotal, shipping = "Free Shipping", total, items }) => {
+const CartTotals = ({ subtotal, shipping = "Free Shipping", total, items }:any) => {
   return (
     <div className="p-6 border rounded-md bg-white lg:w-[500px] w-full mt-10">
       <h2 className="text-lg font-bold mb-4">Cart Totals</h2>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
@@ -5,12 +6,12 @@ import toast from "react-hot-toast";
 import UpdateRoomForm from "./UpdateRoomForm";
 import { useUpdateProductMutation } from "@/redux/api/baseApi";
 
-const UpdateProductData = ({ isOpen, setIsEditModalOpen, product, id }) => {
+const UpdateProductData = ({ isOpen, setIsEditModalOpen, product }:any) => {
   const [loading, setLoading] = useState(false);
   const [roomData, setRoomData] = useState(product);
   const [updateProduct] = useUpdateProductMutation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     setLoading(true);
     setIsEditModalOpen(false);

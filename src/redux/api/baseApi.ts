@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://machanical-keyboard-server.vercel.app/api/" }),
   tagTypes: ["product"],
   endpoints: (builder) => ({
     getProducts: builder.query({
@@ -60,7 +60,7 @@ export const baseApi = createApi({
     }),
     addProduct: builder.mutation({
       query: (options) => {
-        console.log("base api =>", options);  
+        console.log("base api =>", options);
         return {
           url: `/product`,
           method: "POST",
@@ -71,12 +71,14 @@ export const baseApi = createApi({
     }),
 
     decreaseProductQuantity: builder.mutation({
-      query: (id) => ({
+      query: ({ id, quantity }) => ({
         url: `/product/${id}/decrease`,
         method: "PATCH",
+        body: { quantity },  // Pass the quantity in the request body
       }),
       invalidatesTags: ["product"],
     }),
+    
   }),
 });
 
@@ -86,7 +88,7 @@ export const {
   useDeleteProductMutation,
   useUpdateProductMutation,
   useAddProductMutation,
-  useDecreaseProductQuantityMutation
+  useDecreaseProductQuantityMutation,
 } = baseApi;
 
 export default baseApi;

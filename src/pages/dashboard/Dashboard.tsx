@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import MyListings from "./MyListing";
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
 import { ScrollRestoration } from "react-router-dom";

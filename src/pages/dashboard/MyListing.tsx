@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect } from "react";
 import EmptyState from "@/components/ui/shared/emptyState/EmptyState";
 import { useGetProductsQuery } from "@/redux/api/baseApi";
 import ProductDataRow from "./ProductDataRow";
 import AddProductData from "../../modal/AddProductData";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { motion } from 'framer-motion';
 
 const MyListings = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +30,7 @@ const MyListings = () => {
 
   const totalPages = Math.ceil(filteredProducts?.length / productsPerPage);
 
-  const handlePageChange = (newPage) => {
+  const handlePageChange = (newPage:number) => {
     if (newPage > 0 && newPage <= totalPages) {
       setCurrentPage(newPage);
     }
@@ -57,10 +57,7 @@ const MyListings = () => {
             <div className="w-full max-w-7xl px-4 xl:px-0 mx-auto">
               <div className="py-8">
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                  <motion.div
-                    initial={{ opacity: 0, x: 100, scale: 0.8 }} // Start with smaller scale and below
-                    whileInView={{ opacity: 1, x: 0, scale: 1 }} // End with normal scale and position
-                    transition={{ duration: 2 }}
+                  <div
                     className="inline-block min-w-full shadow rounded-lg overflow-hidden"
                   >
                     <table className="min-w-full leading-normal">
@@ -99,12 +96,12 @@ const MyListings = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentProducts?.map((product) => (
+                        {currentProducts?.map((product:any) => (
                           <ProductDataRow key={product._id} product={product} />
                         ))}
                       </tbody>
                     </table>
-                  </motion.div>
+                  </div>
                   {/* Pagination Controls */}
                   <div className="flex justify-center items-center mt-8">
                     <button

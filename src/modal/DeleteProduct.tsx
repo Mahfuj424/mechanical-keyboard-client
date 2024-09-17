@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-const DeleteProduct = ({ modalHandler, closeModal, isOpen, id }) => {
+const DeleteProduct = ({ modalHandler, closeModal, isOpen, id }:any) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as='div' className='relative z-10' onClose={closeModal}>

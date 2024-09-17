@@ -1,5 +1,4 @@
 import SecondNavbar from "@/components/ui/shared/SecondNavbar";
-import React from "react";
 
 const Success = () => {
   return (
